@@ -319,6 +319,23 @@ label3.setStyle(
 );
 label3.setVisible(false);
 pane.getChildren().add(label3);
+Label label4 = new Label("bottle are the same");
+label4.setLayoutX(300);
+label4.setLayoutY(10);
+label4.setTextFill(Color.MEDIUMPURPLE);
+label4.setFont(new Font("Comic Sans MS", 20));
+label4.setStyle(
+    "-fx-background-color: #f9e6ff; " +
+    "-fx-border-color: #cc33ff; " +
+    "-fx-border-width: 3; " +
+    "-fx-border-radius: 15; " +
+    "-fx-background-radius: 15; " +
+    "-fx-padding: 8 15 8 15; " +
+    "-fx-effect: dropshadow(gaussian, #cc33ff, 10, 0.5, 0, 0); " +
+    "-fx-font-weight: bold;"
+);
+label4.setVisible(false);
+pane.getChildren().add(label4);
 
         Rectangle[] toppestRect1 = new Rectangle[1];
         Rectangle[] toppestRect2 = new Rectangle[1];
