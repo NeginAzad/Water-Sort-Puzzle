@@ -302,6 +302,23 @@ label2.setStyle(
 );
 label2.setVisible(false);
 pane.getChildren().add(label2);
+Label label3 = new Label("Colors don't match!");
+label3.setLayoutX(300);
+label3.setLayoutY(10);
+label3.setTextFill(Color.DEEPSKYBLUE);
+label3.setFont(new Font("Comic Sans MS", 20));
+label3.setStyle(
+    "-fx-background-color: #e6f0ff; " +
+    "-fx-border-color: #3399ff; " +
+    "-fx-border-width: 3; " +
+    "-fx-border-radius: 15; " +
+    "-fx-background-radius: 15; " +
+    "-fx-padding: 8 15 8 15; " +
+    "-fx-effect: dropshadow(gaussian, #3399ff, 10, 0.5, 0, 0); " +
+    "-fx-font-weight: bold;"
+);
+label3.setVisible(false);
+pane.getChildren().add(label3);
 
         Rectangle[] toppestRect1 = new Rectangle[1];
         Rectangle[] toppestRect2 = new Rectangle[1];
