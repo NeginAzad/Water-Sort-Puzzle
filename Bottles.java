@@ -15,4 +15,20 @@ public class Bottles {
 
         return  rectangle;
     }
+    public ArrayList<Rectangle> getLittleRectangles(){
+
+        return littleRectangles;
+    }
+
+    public int findindex(double x, double y , CreateRectangles createRectangles){
+
+        for(int i = 0 ; i < 6 ; i++){
+
+            if(createRectangles.bottles.get(i).getRectangle().contains(x , y)){
+
+                return i;
+            }
+        }
+        return  -1;
+    }
 }
