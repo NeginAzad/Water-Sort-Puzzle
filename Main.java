@@ -58,24 +58,34 @@ public class Main extends Application {
                 createRectangles.bottle();
                 createRectangles.littleRect(colorArrangment.type2());
                 break;
-              case 3:
-                 createRectangles.bottle();
-                 createRectangles.littleRect(colorArrangment.type3());
-                 break;
-             case 4:
-                 createRectangles.bottle();
-                 createRectangles.littleRect(colorArrangment.type4());
-                 break;
-             case 5:
-                 createRectangles.bottle();
-                 createRectangles.littleRect(colorArrangment.type5());
-                 break;
-                 
-            }
-                for(int i = 0 ; i < 6 ; i++){
-        
-                    pane.getChildren().addAll(createRectangles.bottles.get(i).group);
-                }
+            case 3:
+                createRectangles.bottle();
+                createRectangles.littleRect(colorArrangment.type3());
+                break;
+            case 4:
+                createRectangles.bottle();
+                createRectangles.littleRect(colorArrangment.type4());
+                break;
+            case 5:
+                createRectangles.bottle();
+                createRectangles.littleRect(colorArrangment.type5());
+                break;
+
+        }
+        for (int i = 0; i < 6; i++) {
+
+            pane.getChildren().addAll(createRectangles.bottles.get(i).group);
+        }
+        pane.setOnMouseClicked(event -> {
+
+            label1.setVisible(false);
+            label2.setVisible(false);
+            label3.setVisible(false);
+            label4.setVisible(false);
+
+            double x = event.getX();
+            double y = event.getY();
+        });
 
     }
 
