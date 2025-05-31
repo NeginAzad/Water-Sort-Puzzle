@@ -272,8 +272,8 @@ label1.setLayoutY(10);
 label1.setTextFill(Color.RED);
 label1.setFont(new Font("Comic Sans MS", 20));
 label1.setStyle(
-    "-fx-background-color: #ffebeb; " +         // پس‌زمینه 
-    "-fx-border-color: #ff4c4c; " +             // حاشیه قرمز
+    "-fx-background-color: #ffebeb; " +          
+    "-fx-border-color: #ff4c4c; " +             
     "-fx-border-width: 3; " +
     "-fx-border-radius: 15; " +
     "-fx-background-radius: 15; " +
