@@ -36,4 +36,12 @@ public class Bottles {
         return createRectangles.bottles.get(index);
 
     }
+    public  boolean isEmpty(){
+
+        if(littleRectangles.isEmpty()){
+
+            return  true;
+        }
+        return  false;
+    }
 }
