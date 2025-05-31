@@ -6,7 +6,8 @@ public class ColorArrangment {
     private Color brightLime    = Color.rgb(235, 144, 226);;      
     private Color brightMagenta = Color.rgb(234, 242, 0);;    
     private Color brightCyan    = Color.rgb(240, 33, 33);;    
-
+ 
+    
     private Color[] arr1 = new Color[4];
     private Color[] arr2 = new Color[4];
     private Color[] arr3 = new Color[4];
