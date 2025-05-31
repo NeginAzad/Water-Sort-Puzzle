@@ -85,6 +85,23 @@ public class Main extends Application {
 
             double x = event.getX();
             double y = event.getY();
+
+            //بررسی بطری مبدا
+
+            if(bottle.findindex(x , y , createRectangles) != -1 && counter[0] == 0){
+
+                index1[0] = bottle.findindex(x , y , createRectangles);
+
+                if(bottle.findBottle(index1[0], createRectangles).isEmpty()){
+
+                    label1.setVisible(true);
+                }
+                else{
+
+                   toppestRect1[0] = createRectangles.bottles.get(index1[0]).findToppestRect();
+                   counter[0] = 1;
+                }
+            }
         });
 
     }
