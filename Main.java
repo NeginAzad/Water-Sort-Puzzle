@@ -111,6 +111,11 @@ public class Main extends Application {
 
                    label4.setVisible(true);
                 }
+                //بررسی پر بودن بطری مقصد
+                else if(createRectangles.bottles.get(index2[0]).getLittleRectangles().size() == 4){
+
+                    label2.setVisible(true);
+                }
             }
               
         });
