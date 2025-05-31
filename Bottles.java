@@ -58,5 +58,14 @@ public class Bottles {
             }
         }
         return littleRectangles.get(index);
-}
+    }
+    public boolean matchColor(Rectangle rect){
+
+        if(findToppestRect().getFill() == rect.getFill()){
+
+            return  true;
+        }
+        return  false;
+    }
+
 }
