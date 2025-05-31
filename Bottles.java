@@ -141,5 +141,19 @@ public class Bottles {
             r1.setByAngle(-20);
         }
         pt1.getChildren().addAll(t1 , r1);
+
+        //انیمیشن اب
+
+        Timeline timeline1 = new Timeline(new KeyFrame(Duration.seconds(0)  ,new KeyValue(findToppestRect().heightProperty() , 50) , new KeyValue(findToppestRect().yProperty() , findToppestRect().getY())) ,
+            new KeyFrame(Duration.seconds(1) , new KeyValue(findToppestRect().heightProperty() , 0) , new KeyValue(findToppestRect().yProperty() , findToppestRect().getY()+50)));
+
+
+        Timeline timeline2 = new Timeline();
+
+
+
+        KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0)  ,new KeyValue(rect.heightProperty() , 0) ,new KeyValue(rect.yProperty() , rect.getY()));
+        KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(1)  ,new KeyValue(rect.heightProperty() , 50) ,new KeyValue(rect.yProperty() , rect.getY()-50));
+        timeline2.getKeyFrames().addAll(keyFrame1, keyFrame2);
     }
 }
