@@ -26,5 +26,22 @@ public class CreateRectengles {
             this.bottles.add(bottle);
         }
     }
+    public void littleRect(Color[][] color){
+
+        for(int i = 0 ; i < 4 ; i++){
+
+            for(int j = 0 ; j < 4 ; j++) {
+
+                Rectangle rect = bottles.get(i).getRectangle();
+                Rectangle rectangle = new Rectangle(rect.getX(), 360 - (50 * j), 60, 50);
+                rectangle.setFill(color[i][j]);
+
+                bottles.get(i).getLittleRectangles().add(rectangle);
+            }
+            bottles.get(i).group.getChildren().addAll(bottles.get(i).getLittleRectangles());
+        }
+        bottles.get(4).group.getChildren().addAll(bottles.get(4).getLittleRectangles());
+        bottles.get(5).group.getChildren().addAll(bottles.get(5).getLittleRectangles());
+    }
 
 }
