@@ -155,5 +155,28 @@ public class Bottles {
         KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0)  ,new KeyValue(rect.heightProperty() , 0) ,new KeyValue(rect.yProperty() , rect.getY()));
         KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(1)  ,new KeyValue(rect.heightProperty() , 50) ,new KeyValue(rect.yProperty() , rect.getY()-50));
         timeline2.getKeyFrames().addAll(keyFrame1, keyFrame2);
+
+                //انیمیشن برگشت
+
+                TranslateTransition t2 = new TranslateTransition(Duration.seconds(1) , group);
+                RotateTransition r2 = new RotateTransition(Duration.seconds(1) , group);
+                ParallelTransition pt2 = new ParallelTransition();
+        
+                t2.setByY(150);
+        
+                if(rect.getX() > rectangle.getX()){
+        
+                    t2.setByX(-(rect.getX()-40-rectangle.getX()));
+                    r2.setByAngle(-20);
+                }
+                else{
+        
+                    double displacement = rectangle.getX() - (rect.getX()+50);
+        
+                    t2.setByX(displacement);
+                    r2.setByAngle(20);
+                }
+                pt2.getChildren().addAll(t2 , r2);
+        
     }
 }
