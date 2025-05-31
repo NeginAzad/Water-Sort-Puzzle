@@ -136,11 +136,19 @@ public class Main extends Application {
                         createRectangles.bottles.get(index1[0]).animation(createRectangles.bottles.get(index2[0]) , noHight,createRectangles,stage);
 
                     }
-                }      
+                    else{
+                        label3.setVisible(true);
+
+                    System.out.println("warning");
+                    }
+                }
+                counter[0] = 0;      
             }
               
         });
-
+        Scene scene = new Scene(pane , 900, 600);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {
