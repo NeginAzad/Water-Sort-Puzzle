@@ -31,4 +31,9 @@ public class Bottles {
         }
         return  -1;
     }
+    public Bottles findBottle( int index , CreateRectangles createRectangles){
+
+        return createRectangles.bottles.get(index);
+
+    }
 }
