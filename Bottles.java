@@ -177,6 +177,44 @@ public class Bottles {
                     r2.setByAngle(20);
                 }
                 pt2.getChildren().addAll(t2 , r2);
+
+                pt1.setOnFinished(e ->{
+
+                    timeline2.setOnFinished(event ->{
+        
+                        delete();
+                        
+                        if(bot.getLittleRectangles().size() != 0) {
+        
+                            bot.add(rect);
+                        }
+                        else{
+                            rect.setHeight(50);
+                            bot.add(rect);
+                        }
+                        if(isWin(createRectangles)){
+        
+                            PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+                            pause.setOnFinished(ev ->{
+        
+                                Main main = new Main();
+                                main.counterWin++;
+                                main.showStartScene(stage);
+        
+                            });
+                            pause.play();
+                        }
+                        pt2.play();
+        
+                    });
+                    timeline1.play();
+                    timeline2.play();
+                    MusicPourWater mediaPlayer = new MusicPourWater();
+                    mediaPlayer.play();
+            
+                
+                });
+                pt1.play();
         
     }
 }
