@@ -126,6 +126,71 @@ shadow.setOffsetY(0);
 title.setEffect(shadow);
 
 pane.getChildren().add(title);
+// رنگ دکمه ها 
+String[] buttonColors = {
+    "#2196F3",  // آبی روشن
+    "#4CAF50",  // سبز
+    "#FFC107",  // زرد
+    "#FF5722",  // نارنجی
+    "#9C27B0"   // بنفش
+};
+
+// هاور دکمه
+String hoverTextColor = "#2196F3";  // هاور متن ابی
+
+for (int i = 1; i <= 5; i++) {
+    final int level = i;
+    final int index = i - 1;
+
+    Button button = new Button("Level " + i);
+    button.setLayoutX(320);
+    button.setLayoutY(120 + (i * 70));
+    button.setPrefWidth(160);
+
+    button.setStyle(
+        "-fx-background-color: " + buttonColors[index] + ";" +
+        "-fx-text-fill: white;" +
+        "-fx-font-size: 20px;" +
+        "-fx-font-weight: bold;" +
+        "-fx-padding: 12 30;" +
+        "-fx-border-radius: 30;" +
+        "-fx-background-radius: 30;" +
+        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 8, 0, 0, 4);"
+    );
+
+    button.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+    pane.getChildren().add(button);
+
+    button.setOnMouseEntered(e -> button.setStyle(
+        "-fx-background-color: white;" +
+        "-fx-text-fill: " + buttonColors[index] + ";" +
+        "-fx-font-size: 20px;" +
+        "-fx-font-weight: bold;" +
+        "-fx-padding: 12 30;" +
+        "-fx-border-radius: 30;" +
+        "-fx-background-radius: 30;" +
+        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 12, 0, 0, 6);"
+    ));
+
+    button.setOnMouseExited(e -> button.setStyle(
+        "-fx-background-color: " + buttonColors[index] + ";" +
+        "-fx-text-fill: white;" +
+        "-fx-font-size: 20px;" +
+        "-fx-font-weight: bold;" +
+        "-fx-padding: 12 30;" +
+        "-fx-border-radius: 30;" +
+        "-fx-background-radius: 30;" +
+        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 8, 0, 0, 4);"
+    ));
+
+    button.setOnAction(e -> {
+        try {
+            showGameScene(stage, level);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    });
+}
 
 
     }
