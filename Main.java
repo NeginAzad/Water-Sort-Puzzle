@@ -87,7 +87,9 @@ public void showVictoryAnimation(Pane pane) {
     }
 }
     public void start(Stage stage) throws Exception {
-
+ BackGroundMusic back = new BackGroundMusic();
+        back.play();
+        showStartScene(stage);
     }
 
     public void showGameScene(Stage stage, int random) {
