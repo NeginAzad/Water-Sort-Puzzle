@@ -116,6 +116,27 @@ public class Main extends Application {
 
                     label2.setVisible(true);
                 }
+                else{
+                    //بررسی خالی بودن بطری مقصد
+                    if(createRectangles.bottles.get(index2[0]).getLittleRectangles().size() == 0){
+
+
+                        Rectangle noHight = new Rectangle(createRectangles.bottles.get(index2[0]).getRectangle().getX() , 410 , 60 , 0 );
+                        noHight.setFill(toppestRect1[0].getFill());
+                        createRectangles.bottles.get(index2[0]).group.getChildren().add(noHight);
+                        createRectangles.bottles.get(index1[0]).animation(createRectangles.bottles.get(index2[0]) , noHight,createRectangles,stage);
+                    }
+                    //بررسی بالاترین رنگ بطری مقصد
+                    else if(createRectangles.bottles.get(index2[0]).matchColor(toppestRect1[0])){
+
+                        toppestRect2[0] = createRectangles.bottles.get(index2[0]).findToppestRect();
+                        Rectangle noHight = new Rectangle(createRectangles.bottles.get(index2[0]).getRectangle().getX() , toppestRect2[0].getY() , 60 , 0 );
+                        noHight.setFill(toppestRect2[0].getFill());
+                        createRectangles.bottles.get(index2[0]).group.getChildren().add(noHight);
+                        createRectangles.bottles.get(index1[0]).animation(createRectangles.bottles.get(index2[0]) , noHight,createRectangles,stage);
+
+                    }
+                }      
             }
               
         });
