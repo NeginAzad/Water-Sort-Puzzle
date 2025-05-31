@@ -85,5 +85,11 @@ public class Bottles {
         littleRectangles.add(rec);
         group.getChildren().add(rec);
     }
+    public void delete(){
+
+        group.getChildren().remove(littleRectangles.get(index));
+        littleRectangles.remove(index);
+
+    }
 
 }
