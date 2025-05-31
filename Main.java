@@ -281,6 +281,27 @@ label1.setStyle(
     "-fx-effect: dropshadow(gaussian, #ff4c4c, 10, 0.5, 0, 0); " +
     "-fx-font-weight: bold;"
 );
+label1.setVisible(false);
+pane.getChildren().add(label1);
+
+
+Label label2 = new Label("the chosen bottle is full!");
+label2.setLayoutX(300);
+label2.setLayoutY(10);
+label2.setTextFill(Color.ORANGE);
+label2.setFont(new Font("Comic Sans MS", 20));
+label2.setStyle(
+    "-fx-background-color: #fff5e6; " +
+    "-fx-border-color: #ffa500; " +
+    "-fx-border-width: 3; " +
+    "-fx-border-radius: 15; " +
+    "-fx-background-radius: 15; " +
+    "-fx-padding: 8 15 8 15; " +
+    "-fx-effect: dropshadow(gaussian, #ffa500, 10, 0.5, 0, 0); " +
+    "-fx-font-weight: bold;"
+);
+label2.setVisible(false);
+pane.getChildren().add(label2);
 
         Rectangle[] toppestRect1 = new Rectangle[1];
         Rectangle[] toppestRect2 = new Rectangle[1];
