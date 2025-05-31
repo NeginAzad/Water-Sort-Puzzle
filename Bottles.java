@@ -119,4 +119,27 @@ public class Bottles {
         }
         return counter == 4;
     }
+    public void animation(Bottles bot , Rectangle rect , CreateRectangles createRectangles , Stage stage){
+
+        //انیمیشن رفتن
+        TranslateTransition t1 = new TranslateTransition(Duration.seconds(1) , group);
+        RotateTransition r1 = new RotateTransition(Duration.seconds(1) , group);
+        ParallelTransition pt1 = new ParallelTransition();
+
+        t1.setByY(-150);
+
+        if(rect.getX() > rectangle.getX()){
+
+            t1.setByX(rect.getX()-40-rectangle.getX());
+            r1.setByAngle(20);
+        }
+        else{
+
+            double displacement = rectangle.getX() - (rect.getX()+50);
+
+            t1.setByX(-displacement);
+            r1.setByAngle(-20);
+        }
+        pt1.getChildren().addAll(t1 , r1);
+    }
 }
