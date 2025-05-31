@@ -89,11 +89,14 @@ public void showVictoryAnimation(Pane pane) {
         fade.play();
     }
 }
-    public void start(Stage stage) throws Exception{
-
+    public void start(Stage stage) throws Exception {
         
-    } 
-    public void showGameScene(Stage stage , int random){
+        BackGroundMusic back = new BackGroundMusic();
+        back.play();
+        showStartScene(stage);
+    }
+
+    public void showGameScene(Stage stage, int random) {
 
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: linear-gradient(to bottom,rgb(235, 237, 218), #c2e9fb);");
