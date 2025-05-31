@@ -91,6 +91,7 @@ public void showVictoryAnimation(Pane pane) {
         back.play();
         showStartScene(stage);
     }
+    public void showStartScene(Stage stage) {}
 
     public void showGameScene(Stage stage, int random) {
 
