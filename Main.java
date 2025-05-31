@@ -262,6 +262,23 @@ pane.getChildren().add(reset);
 reset.setOnAction(e -> {
     resetButton.reset();
 });
+//دکمه های هشدار
+
+Label label1 = new Label("the chosen bottle is empty!");
+label1.setLayoutX(300);
+label1.setLayoutY(10);
+label1.setTextFill(Color.RED);
+label1.setFont(new Font("Comic Sans MS", 20));
+label1.setStyle(
+    "-fx-background-color: #ffebeb; " +         // پس‌زمینه 
+    "-fx-border-color: #ff4c4c; " +             // حاشیه قرمز
+    "-fx-border-width: 3; " +
+    "-fx-border-radius: 15; " +
+    "-fx-background-radius: 15; " +
+    "-fx-padding: 8 15 8 15; " +
+    "-fx-effect: dropshadow(gaussian, #ff4c4c, 10, 0.5, 0, 0); " +
+    "-fx-font-weight: bold;"
+);
 
         Rectangle[] toppestRect1 = new Rectangle[1];
         Rectangle[] toppestRect2 = new Rectangle[1];
