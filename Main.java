@@ -102,6 +102,17 @@ public class Main extends Application {
                    counter[0] = 1;
                 }
             }
+            //بررسی بطری مقصد
+            else  if(bottle.findindex(x , y , createRectangles) != -1 && counter[0] == 1){
+
+                index2[0]= bottle.findindex(x , y , createRectangles);
+                //هشدار جهت یکسان بودن بطری مبدا و مقصد
+                if(createRectangles.bottles.get(index1[0])==createRectangles.bottles.get(index2[0])){
+
+                   label4.setVisible(true);
+                }
+            }
+              
         });
 
     }
