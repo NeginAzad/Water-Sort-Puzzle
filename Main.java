@@ -102,6 +102,34 @@ public void showVictoryAnimation(Pane pane) {
                 
                showVictoryAnimation(pane);
             }
+                    // تیتر وسط
+Label title = new Label("WATERBOTTLE");
+title.setFont(Font.font("Verdana", FontWeight.EXTRA_BOLD, 40));
+title.setTextFill(Color.WHITE);
+title.setAlignment(Pos.CENTER);
+title.setPrefWidth(800);  // بیاد وسط
+title.setLayoutY(40);
+
+// دیزاین تیتر
+title.setStyle(
+    "-fx-background-color: rgba(50, 115, 220, 0.8);" +    
+    "-fx-padding: 15 50;" +
+    "-fx-border-radius: 25;" +
+    "-fx-background-radius: 25;" +
+    "-fx-border-color: #7abaff;" +
+    "-fx-border-width: 4;"
+);
+
+// ....
+DropShadow shadow = new DropShadow();
+shadow.setColor(Color.web("#66ccff"));
+shadow.setRadius(12);
+shadow.setSpread(0.3);
+shadow.setOffsetX(0);
+shadow.setOffsetY(0);
+title.setEffect(shadow);
+
+pane.getChildren().add(title);
 
 
     }
