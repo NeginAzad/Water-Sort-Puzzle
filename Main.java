@@ -195,9 +195,16 @@ for (int i = 1; i <= 5; i++) {
         }
     });
 }
+// پس زمینه
+pane.setStyle("-fx-background-color: linear-gradient(to bottom,rgb(243, 249, 192), #c2e9fb);");
+
+Scene startScene = new Scene(pane, 800, 600);
+stage.setScene(startScene);
+stage.show();}
 
 
-    }
+
+    
 
     public void showGameScene(Stage stage, int random) {
 
