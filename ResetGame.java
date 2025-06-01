@@ -8,5 +8,15 @@ public class ResetGame {
     Pane pane = new Pane();
     private ArrayList<Bottles> bottles;
 
+    public ResetGame(Pane pane, ArrayList<Bottles> bottles,CreateRectangles createRectangles,int random ) {
+        this.createRectangles=createRectangles;
+        this.pane = pane;
+        this.bottles = bottles;
+        this.random=random;
+    }
+
+
+    
+
     
 }
