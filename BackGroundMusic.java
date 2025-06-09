@@ -6,7 +6,7 @@ public class BackGroundMusic {
     public MediaPlayer backGrounMediaPlayer;
 
     public BackGroundMusic() {
-        String filePath = "E:\\Coffee-Shop-Song.mp3";
+        String filePath = "C:\\Users\\parseh\\Downloads\\music\\background.mp3";
         File file = new File(filePath);
 
         if (!file.exists()) {
