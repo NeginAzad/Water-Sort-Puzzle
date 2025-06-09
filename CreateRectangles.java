@@ -5,7 +5,7 @@ import javafx.scene.shape.StrokeType;
 import java.util.ArrayList;
 
 
-public class CreateRectengles {
+public class CreateRectangles {
     
     ArrayList<Bottles> bottles = new ArrayList<>();
 
