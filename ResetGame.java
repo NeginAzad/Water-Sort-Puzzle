@@ -29,25 +29,20 @@ public class ResetGame {
         switch (random){
 
             case 1:
-                createRectangles.bottle();
                 createRectangles.littleRect(colorArrangment.type1());
                 break;
-                 case 2:
-        createRectangles.bottle();
-        createRectangles.littleRect(colorArrangment.type2());
-        break;
-      case 3:
-         createRectangles.bottle();
-         createRectangles.littleRect(colorArrangment.type3());
-         break;
-     case 4:
-         createRectangles.bottle();
-         createRectangles.littleRect(colorArrangment.type4());
-         break;
-     case 5:
-         createRectangles.bottle();
-         createRectangles.littleRect(colorArrangment.type5());
-         break;
+            case 2:
+                 createRectangles.littleRect(colorArrangment.type2());
+               break;
+             case 3:
+                  createRectangles.littleRect(colorArrangment.type3());
+                break;
+             case 4:
+                   createRectangles.littleRect(colorArrangment.type4());
+                 break;
+            case 5:
+                   createRectangles.littleRect(colorArrangment.type5());
+                   break;
          
         }
     }
