@@ -19,6 +19,11 @@ public class GameState {
                 bottleYs.add(rect.getY());
             }
 
+            
+            colors.add(bottleColors);
+            heights.add(bottleHeights);
+            yPositions.add(bottleYs);
+
 }
      }
     }
