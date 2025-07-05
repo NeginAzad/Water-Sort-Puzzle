@@ -488,7 +488,7 @@ pane.getChildren().add(label4);
                         noHight.setFill(toppestRect1[0].getFill());
                         createRectangles.bottles.get(index2[0]).group.getChildren().add(noHight);
 
-                        
+                        undoStack.push(new GameState(createRectangles.bottles));
 
                         createRectangles.bottles.get(index1[0]).animation(createRectangles.bottles.get(index2[0]) , noHight,createRectangles,stage);
                     }
@@ -500,7 +500,7 @@ pane.getChildren().add(label4);
                         noHight.setFill(toppestRect2[0].getFill());
                         createRectangles.bottles.get(index2[0]).group.getChildren().add(noHight);
 
-
+                        undoStack.push(new GameState(createRectangles.bottles));
 
                         createRectangles.bottles.get(index1[0]).animation(createRectangles.bottles.get(index2[0]) , noHight,createRectangles,stage);
 
@@ -520,6 +520,31 @@ pane.getChildren().add(label4);
         stage.show();
     }
 
+    public void restoreState(GameState state, ArrayList<Bottles> bottles) {
+    for (int i = 0; i < bottles.size(); i++) {
+        Bottles bottle = bottles.get(i);
+
+        // حذف مستطیل‌ها از group (به‌جز بطری اصلی)
+        bottle.group.getChildren().removeIf(n -> n instanceof Rectangle && n != bottle.getRectangle());
+
+        // پاک کردن لیست فعلی
+        bottle.getLittleRectangles().clear();
+
+        for (int j = 0; j < state.colors.get(i).size(); j++) {
+            Color color = state.colors.get(i).get(j);
+            double height = state.heights.get(i).get(j);
+            double y = state.yPositions.get(i).get(j);
+            double x = bottle.getRectangle().getX();
+
+            Rectangle r = new Rectangle(x, y, 60, height);
+            r.setFill(color);
+
+            bottle.getLittleRectangles().add(r);
+        }
+
+        bottle.group.getChildren().addAll(bottle.getLittleRectangles());
+    }
+}
 
     
 
