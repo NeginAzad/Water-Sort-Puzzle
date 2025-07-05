@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Stack;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
@@ -23,6 +25,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Main extends Application {
+
+    int counterWin = 0;
+    
 public void showVictoryAnimation(Pane pane) {
 
     for (int i = 0; i < 25; i++) {
@@ -204,8 +209,13 @@ stage.show();}
 
     public void showGameScene(Stage stage, int random) {
 
+        
+
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: linear-gradient(to bottom,rgb(235, 237, 218), #c2e9fb);");
+       
+        Stack<GameState> undoStack = new Stack<>();
+          
         Bottles bottle = new Bottles();
         int[] counter = { 0 };
         ColorArrangment colorArrangment = new ColorArrangment();
@@ -213,6 +223,7 @@ stage.show();}
 
         ResetGame resetButton = new ResetGame(pane, createRectangles.bottles, createRectangles, random);
         Button reset = new Button("RESET");
+        Button undo = new Button("UNDO");
 
         reset.setStyle(
     "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" +  // گرادیانت کرم روشن به کرم پررنگ
@@ -263,7 +274,64 @@ pane.getChildren().add(reset);
 
 reset.setOnAction(e -> {
     resetButton.reset();
+    undoStack.clear();
 });
+
+undo.setLayoutX(170);
+undo.setLayoutY(50);
+undo.setStyle(
+     "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" +  // گرادیانت کرم روشن به کرم پررنگ
+    "-fx-text-fill: rgb(139, 69, 19);" +  // رنگ متن قهوه‌ای 
+    "-fx-font-size: 20px;" +
+    "-fx-font-weight: bold;" +
+    "-fx-padding: 12 25;" +
+    "-fx-border-radius: 30;" +
+    "-fx-background-radius: 30;" +
+    "-fx-border-color: rgb(222, 184, 135);" +  // رنگ حاشیه کرم 
+    "-fx-border-width: 3px;" +
+    "-fx-effect: dropshadow(three-pass-box, rgba(222, 184, 135, 0.7), 8, 0, 0, 6);"
+);
+
+undo.setOnMouseEntered(e -> undo.setStyle(
+    "-fx-background-color: linear-gradient(to bottom, rgb(255, 218, 185), rgb(210, 180, 140));" +  // کرم پررنگ به کرم تیره‌
+        "-fx-text-fill: rgb(255, 250, 240);" +  // متن سفید کرم روشن
+        "-fx-font-size: 20px;" +
+        "-fx-font-weight: bold;" +
+        "-fx-padding: 12 25;" +
+        "-fx-border-radius: 30;" +
+        "-fx-background-radius: 30;" +
+        "-fx-border-color: rgb(205, 133, 63);" +  // حاشیه قهوه‌ای طلایی پررنگ
+        "-fx-border-width: 3px;" +
+        "-fx-effect: dropshadow(three-pass-box, rgba(205, 133, 63, 0.9), 10, 0, 0, 8);"
+));
+undo.setOnMouseExited(e -> undo.setStyle(
+   "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" +
+        "-fx-text-fill: rgb(139, 69, 19);" +
+        "-fx-font-size: 20px;" +
+        "-fx-font-weight: bold;" +
+        "-fx-padding: 12 25;" +
+        "-fx-border-radius: 30;" +
+        "-fx-background-radius: 30;" +
+        "-fx-border-color: rgb(222, 184, 135);" +
+        "-fx-border-width: 3px;" +
+        "-fx-effect: dropshadow(three-pass-box, rgba(222, 184, 135, 0.7), 8, 0, 0, 6);"
+));
+
+
+undo.setOnAction(h -> {
+    if (!undoStack.isEmpty()) {
+        GameState lastState = undoStack.pop();
+        restoreState(lastState, createRectangles.bottles);
+    }
+});
+pane.getChildren().add(undo);
+
+
+
+
+
+
+
 //دکمه های هشدار
 
 Label label1 = new Label("the chosen bottle is empty!");
@@ -379,6 +447,8 @@ pane.getChildren().add(label4);
             double x = event.getX();
             double y = event.getY();
 
+
+
             //بررسی بطری مبدا
 
             if(bottle.findindex(x , y , createRectangles) != -1 && counter[0] == 0){
@@ -417,6 +487,9 @@ pane.getChildren().add(label4);
                         Rectangle noHight = new Rectangle(createRectangles.bottles.get(index2[0]).getRectangle().getX() , 410 , 60 , 0 );
                         noHight.setFill(toppestRect1[0].getFill());
                         createRectangles.bottles.get(index2[0]).group.getChildren().add(noHight);
+
+                        
+
                         createRectangles.bottles.get(index1[0]).animation(createRectangles.bottles.get(index2[0]) , noHight,createRectangles,stage);
                     }
                     //بررسی بالاترین رنگ بطری مقصد
@@ -426,6 +499,9 @@ pane.getChildren().add(label4);
                         Rectangle noHight = new Rectangle(createRectangles.bottles.get(index2[0]).getRectangle().getX() , toppestRect2[0].getY() , 60 , 0 );
                         noHight.setFill(toppestRect2[0].getFill());
                         createRectangles.bottles.get(index2[0]).group.getChildren().add(noHight);
+
+
+
                         createRectangles.bottles.get(index1[0]).animation(createRectangles.bottles.get(index2[0]) , noHight,createRectangles,stage);
 
                     }
@@ -443,6 +519,9 @@ pane.getChildren().add(label4);
         stage.setScene(scene);
         stage.show();
     }
+
+
+    
 
     public static void main(String[] args) {
 
