@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Stack;
 
 import javafx.animation.FadeTransition;
@@ -98,6 +99,8 @@ public class Main extends Application {
     }
 
     public void showStartScene(Stage stage) {
+
+
         Pane pane = new Pane();
 
         if (counterWin != 0) {
@@ -210,13 +213,15 @@ public class Main extends Application {
         Bottles[] bottle1 = new Bottles[1];
         Bottles[] bottle2 = new Bottles[1];
 
-        //Stack<GameState> undoStack = new Stack<>();
+        Stack<GameState> undoStack = new Stack<>();
 
         CreateRectangles createRectangles = new CreateRectangles();
         ColorArrangment colorArrangment = new ColorArrangment();
 
         ResetGame resetButton = new ResetGame(pane, createRectangles.bottles, createRectangles, random);
         Button reset = new Button("RESET");
+
+        Button undo = new Button("UNDO");
 
         reset.setStyle(
                 "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" + // گرادیانت
@@ -273,6 +278,8 @@ public class Main extends Application {
         reset.setOnAction(e -> {
             resetButton.reset();
         });
+        
+        
         // دکمه های هشدار
 
         Label label1 = new Label("the chosen bottle is empty!");
@@ -406,14 +413,14 @@ public class Main extends Application {
                     label2.setVisible(true);
                 } else {
 
-                    if (bottle2[0].match(bottle1[0])) {
+                    if (bottle2[0].match(bottle1[0])) {    
+                            undoStack.push(new GameState(createRectangles.bottles));
+                             bottle1 [0].animation(bottle2[0], createRectangles, stage);
 
-                        //undoStack.push(new GameState(createRectangles.bottles));
-                        bottle1[0].animation(bottle2[0], createRectangles, stage);
+        
                     }
 
-                    else {
-
+                    else{
                         label3.setVisible(true);
 
                     }
@@ -427,6 +434,34 @@ public class Main extends Application {
         stage.show();
     }
 
+
+    public void restoreState(GameState state, ArrayList<Bottles> bottles) {
+    for (int i = 0; i < bottles.size(); i++) {
+        Bottles bottle = bottles.get(i);
+
+        // حذف مستطیل‌ها از group (به‌جز بطری اصلی)
+        bottle.group.getChildren().removeIf(n -> n instanceof Rectangle && n != bottle.getRectangle());
+
+        // پاک کردن لیست فعلی
+        bottle.getStack().clear();
+
+        for (int j = 0; j < state.colors.get(i).size(); j++) {
+            Color color = state.colors.get(i).get(j);
+            double height = state.heights.get(i).get(j);
+            double y = state.yPositions.get(i).get(j);
+            double x = bottle.getRectangle().getX();
+
+            Rectangle r = new Rectangle(x, y, 60, height);
+            r.setFill(color);
+
+            bottle.getStack().push(r);
+        }
+
+        bottle.group.getChildren().addAll(bottle.getStack());
+    }
+}
+
+    
     public static void main(String[] args) {
 
         launch(args);
