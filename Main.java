@@ -205,141 +205,158 @@ public class Main extends Application {
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: linear-gradient(to bottom,rgb(235, 237, 218), #c2e9fb);");
         Bottles bottle = new Bottles();
-        int[] counter = {0};
+        int[] counter = { 0 };
         ColorArrangment colorArrangment = new ColorArrangment();
         CreateRectangles createRectangles = new CreateRectangles();
 
-        ResetGame resetButton = new ResetGame(pane, createRectangles.bottles, createRectangles,random);
+        ResetGame resetButton = new ResetGame(pane, createRectangles.bottles, createRectangles, random);
         Button reset = new Button("RESET");
 
-reset.setStyle(
-    "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" +  // گرادیانت کرم روشن به کرم پررنگ
-    "-fx-text-fill: rgb(139, 69, 19);" +  // رنگ متن قهوه‌ای 
-    "-fx-font-size: 20px;" +
-    "-fx-font-weight: bold;" +
-    "-fx-padding: 12 25;" +
-    "-fx-border-radius: 30;" +
-    "-fx-background-radius: 30;" +
-    "-fx-border-color: rgb(222, 184, 135);" +  // رنگ حاشیه کرم 
-    "-fx-border-width: 3px;" +
-    "-fx-effect: dropshadow(three-pass-box, rgba(222, 184, 135, 0.7), 8, 0, 0, 6);"
-);
+        reset.setStyle(
+                "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" + // گرادیانت
+                                                                                                              // کرم
+                                                                                                              // روشن به
+                                                                                                              // کرم
+                                                                                                              // پررنگ
+                        "-fx-text-fill: rgb(139, 69, 19);" + // رنگ متن قهوه‌ای
+                        "-fx-font-size: 20px;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-padding: 12 25;" +
+                        "-fx-border-radius: 30;" +
+                        "-fx-background-radius: 30;" +
+                        "-fx-border-color: rgb(222, 184, 135);" + // رنگ حاشیه کرم
+                        "-fx-border-width: 3px;" +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(222, 184, 135, 0.7), 8, 0, 0, 6);");
 
-reset.setOnMouseEntered(e -> {
-    reset.setStyle(
-        "-fx-background-color: linear-gradient(to bottom, rgb(255, 218, 185), rgb(210, 180, 140));" +  // کرم پررنگ به کرم تیره‌
-        "-fx-text-fill: rgb(255, 250, 240);" +  // متن سفید کرم روشن
-        "-fx-font-size: 20px;" +
-        "-fx-font-weight: bold;" +
-        "-fx-padding: 12 25;" +
-        "-fx-border-radius: 30;" +
-        "-fx-background-radius: 30;" +
-        "-fx-border-color: rgb(205, 133, 63);" +  // حاشیه قهوه‌ای طلایی پررنگ
-        "-fx-border-width: 3px;" +
-        "-fx-effect: dropshadow(three-pass-box, rgba(205, 133, 63, 0.9), 10, 0, 0, 8);"
-    );
-});
+        reset.setOnMouseEntered(e -> {
+            reset.setStyle(
+                    "-fx-background-color: linear-gradient(to bottom, rgb(255, 218, 185), rgb(210, 180, 140));" + // کرم
+                                                                                                                  // پررنگ
+                                                                                                                  // به
+                                                                                                                  // کرم
+                                                                                                                  // تیره‌
+                            "-fx-text-fill: rgb(255, 250, 240);" + // متن سفید کرم روشن
+                            "-fx-font-size: 20px;" +
+                            "-fx-font-weight: bold;" +
+                            "-fx-padding: 12 25;" +
+                            "-fx-border-radius: 30;" +
+                            "-fx-background-radius: 30;" +
+                            "-fx-border-color: rgb(205, 133, 63);" + // حاشیه قهوه‌ای طلایی پررنگ
+                            "-fx-border-width: 3px;" +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(205, 133, 63, 0.9), 10, 0, 0, 8);");
+        });
 
-reset.setOnMouseExited(e -> {
-    reset.setStyle(
-        "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" +
-        "-fx-text-fill: rgb(139, 69, 19);" +
-        "-fx-font-size: 20px;" +
-        "-fx-font-weight: bold;" +
-        "-fx-padding: 12 25;" +
-        "-fx-border-radius: 30;" +
-        "-fx-background-radius: 30;" +
-        "-fx-border-color: rgb(222, 184, 135);" +
-        "-fx-border-width: 3px;" +
-        "-fx-effect: dropshadow(three-pass-box, rgba(222, 184, 135, 0.7), 8, 0, 0, 6);"
-    );
-});
+        reset.setOnMouseExited(e -> {
+            reset.setStyle(
+                    "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" +
+                            "-fx-text-fill: rgb(139, 69, 19);" +
+                            "-fx-font-size: 20px;" +
+                            "-fx-font-weight: bold;" +
+                            "-fx-padding: 12 25;" +
+                            "-fx-border-radius: 30;" +
+                            "-fx-background-radius: 30;" +
+                            "-fx-border-color: rgb(222, 184, 135);" +
+                            "-fx-border-width: 3px;" +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(222, 184, 135, 0.7), 8, 0, 0, 6);");
+        });
 
-reset.setLayoutX(50);
-reset.setLayoutY(50);
-pane.getChildren().add(reset);
+        reset.setLayoutX(50);
+        reset.setLayoutY(50);
+        pane.getChildren().add(reset);
 
-reset.setOnAction(e -> {
-    resetButton.reset();
-});
-//دکمه های هشدار
+        reset.setOnAction(e -> {
+            resetButton.reset();
+        });
+        // دکمه های هشدار
 
-Label label1 = new Label("the chosen bottle is empty!");
-label1.setLayoutX(300);
-label1.setLayoutY(10);
-label1.setTextFill(Color.RED);
-label1.setFont(new Font("Comic Sans MS", 20));
-label1.setStyle(
-    "-fx-background-color: #ffebeb; " +         // پس‌زمینه 
-    "-fx-border-color: #ff4c4c; " +             // حاشیه قرمز
-    "-fx-border-width: 3; " +
-    "-fx-border-radius: 15; " +
-    "-fx-background-radius: 15; " +
-    "-fx-padding: 8 15 8 15; " +
-    "-fx-effect: dropshadow(gaussian, #ff4c4c, 10, 0.5, 0, 0); " +
-    "-fx-font-weight: bold;"
-);
-label1.setVisible(false);
-pane.getChildren().add(label1);
+        Label label1 = new Label("the chosen bottle is empty!");
+        label1.setLayoutX(300);
+        label1.setLayoutY(10);
+        label1.setTextFill(Color.RED);
+        label1.setFont(new Font("Comic Sans MS", 20));
+        label1.setStyle(
+                "-fx-background-color: #ffebeb; " + // پس‌زمینه
+                        "-fx-border-color: #ff4c4c; " + // حاشیه قرمز
+                        "-fx-border-width: 3; " +
+                        "-fx-border-radius: 15; " +
+                        "-fx-background-radius: 15; " +
+                        "-fx-padding: 8 15 8 15; " +
+                        "-fx-effect: dropshadow(gaussian, #ff4c4c, 10, 0.5, 0, 0); " +
+                        "-fx-font-weight: bold;");
+        label1.setVisible(false);
+        pane.getChildren().add(label1);
 
+        Label label2 = new Label("the chosen bottle is full!");
+        label2.setLayoutX(300);
+        label2.setLayoutY(10);
+        label2.setTextFill(Color.ORANGE);
+        label2.setFont(new Font("Comic Sans MS", 20));
+        label2.setStyle(
+                "-fx-background-color: #fff5e6; " +
+                        "-fx-border-color: #ffa500; " +
+                        "-fx-border-width: 3; " +
+                        "-fx-border-radius: 15; " +
+                        "-fx-background-radius: 15; " +
+                        "-fx-padding: 8 15 8 15; " +
+                        "-fx-effect: dropshadow(gaussian, #ffa500, 10, 0.5, 0, 0); " +
+                        "-fx-font-weight: bold;");
+        label2.setVisible(false);
+        pane.getChildren().add(label2);
+        Label label3 = new Label("Colors don't match!");
+        label3.setLayoutX(300);
+        label3.setLayoutY(10);
+        label3.setTextFill(Color.DEEPSKYBLUE);
+        label3.setFont(new Font("Comic Sans MS", 20));
+        label3.setStyle(
+                "-fx-background-color: #e6f0ff; " +
+                        "-fx-border-color: #3399ff; " +
+                        "-fx-border-width: 3; " +
+                        "-fx-border-radius: 15; " +
+                        "-fx-background-radius: 15; " +
+                        "-fx-padding: 8 15 8 15; " +
+                        "-fx-effect: dropshadow(gaussian, #3399ff, 10, 0.5, 0, 0); " +
+                        "-fx-font-weight: bold;");
+        label3.setVisible(false);
+        pane.getChildren().add(label3);
+        Label label4 = new Label("bottle are the same");
+        label4.setLayoutX(300);
+        label4.setLayoutY(10);
+        label4.setTextFill(Color.MEDIUMPURPLE);
+        label4.setFont(new Font("Comic Sans MS", 20));
+        label4.setStyle(
+                "-fx-background-color: #f9e6ff; " +
+                        "-fx-border-color: #cc33ff; " +
+                        "-fx-border-width: 3; " +
+                        "-fx-border-radius: 15; " +
+                        "-fx-background-radius: 15; " +
+                        "-fx-padding: 8 15 8 15; " +
+                        "-fx-effect: dropshadow(gaussian, #cc33ff, 10, 0.5, 0, 0); " +
+                        "-fx-font-weight: bold;");
+        label4.setVisible(false);
+        pane.getChildren().add(label4);
 
-Label label2 = new Label("the chosen bottle is full!");
-label2.setLayoutX(300);
-label2.setLayoutY(10);
-label2.setTextFill(Color.ORANGE);
-label2.setFont(new Font("Comic Sans MS", 20));
-label2.setStyle(
-    "-fx-background-color: #fff5e6; " +
-    "-fx-border-color: #ffa500; " +
-    "-fx-border-width: 3; " +
-    "-fx-border-radius: 15; " +
-    "-fx-background-radius: 15; " +
-    "-fx-padding: 8 15 8 15; " +
-    "-fx-effect: dropshadow(gaussian, #ffa500, 10, 0.5, 0, 0); " +
-    "-fx-font-weight: bold;"
-);
-label2.setVisible(false);
-pane.getChildren().add(label2);
-Label label3 = new Label("Colors don't match!");
-label3.setLayoutX(300);
-label3.setLayoutY(10);
-label3.setTextFill(Color.DEEPSKYBLUE);
-label3.setFont(new Font("Comic Sans MS", 20));
-label3.setStyle(
-    "-fx-background-color: #e6f0ff; " +
-    "-fx-border-color: #3399ff; " +
-    "-fx-border-width: 3; " +
-    "-fx-border-radius: 15; " +
-    "-fx-background-radius: 15; " +
-    "-fx-padding: 8 15 8 15; " +
-    "-fx-effect: dropshadow(gaussian, #3399ff, 10, 0.5, 0, 0); " +
-    "-fx-font-weight: bold;"
-);
-label3.setVisible(false);
-pane.getChildren().add(label3);
-Label label4 = new Label("bottle are the same");
-label4.setLayoutX(300);
-label4.setLayoutY(10);
-label4.setTextFill(Color.MEDIUMPURPLE);
-label4.setFont(new Font("Comic Sans MS", 20));
-label4.setStyle(
-    "-fx-background-color: #f9e6ff; " +
-    "-fx-border-color: #cc33ff; " +
-    "-fx-border-width: 3; " +
-    "-fx-border-radius: 15; " +
-    "-fx-background-radius: 15; " +
-    "-fx-padding: 8 15 8 15; " +
-    "-fx-effect: dropshadow(gaussian, #cc33ff, 10, 0.5, 0, 0); " +
-    "-fx-font-weight: bold;"
-);
-label4.setVisible(false);
-pane.getChildren().add(label4);
-
-        Rectangle[] toppestRect1 = new Rectangle[1];
-        Rectangle[] toppestRect2 = new Rectangle[1];
-        int[] index1 = new int[1];
-        int[] index2 = new int[1];
-
+        switch (random) {
+            case 1:
+                createRectangles.bottle();
+                createRectangles.littleRect(colorArrangment.type1());
+                break;
+            case 2:
+                createRectangles.bottle();
+                createRectangles.littleRect(colorArrangment.type2());
+                break;
+            case 3:
+                createRectangles.bottle();
+                createRectangles.littleRect(colorArrangment.type3());
+                break;
+            case 4:
+                createRectangles.bottle();
+                createRectangles.littleRect(colorArrangment.type4());
+                break;
+            case 5:
+                createRectangles.bottle();
+                createRectangles.littleRect(colorArrangment.type5());
+                break;
+        }
 
     }
 
