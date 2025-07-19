@@ -116,28 +116,18 @@ public class Bottles {
         return isMatch;
     }
 
-    public void add(Rectangle rect) {
+    public void add() {
 
-        Rectangle rec = new Rectangle(rect.getX(), rect.getY(), 60, 50);
-        rec.setFill(rect.getFill());
-        rec.setX(rectangle.getX());
+        for(int i = 0 ; i < matchedRect.size() ; i++){
 
-        if (littleRectangles.size() != 0) {
-
-            rec.setY(findToppestRect().getY() - 50);
-        } else {
-            rec.setY(360);
+            littleRect.push(matchedRect.get(i));
         }
-        group.getChildren().remove(rect);
-        littleRectangles.add(rec);
-        group.getChildren().add(rec);
     }
 
-    public void delete() {
+    public void delete(ArrayList<Rectangle> shouldDelete) {
 
-        group.getChildren().remove(littleRectangles.get(index));
-        littleRectangles.remove(index);
-
+        group.getChildren().removeAll(shouldDelete);
+        
     }
 
     public boolean isWin(CreateRectangles createRectangles) {
