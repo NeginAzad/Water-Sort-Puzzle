@@ -1,10 +1,25 @@
+import java.util.ArrayList;
+import javafx.util.Duration;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.ParallelTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.RotateTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
+import javafx.scene.Group;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import java.util.Stack;
+
 public class Bottles {
 
-    private ArrayList<Rectangle> littleRectangles = new ArrayList<>();
+    private Stack<Rectangle> littleRect = new Stack<>();
+    private ArrayList<Rectangle> matchedRect = new ArrayList<>();
     private Rectangle rectangle = new Rectangle();
     Group group = new Group();
-    // ایندکس بالاترین مستطیل
-    private int index;
 
     public void setRectangle(Rectangle rectangle) {
 
@@ -17,9 +32,9 @@ public class Bottles {
         return rectangle;
     }
 
-    public ArrayList<Rectangle> getLittleRectangles() {
+    public Stack<Rectangle> getStack() {
 
-        return littleRectangles;
+        return littleRect;
     }
 
     public int findindex(double x, double y, CreateRectangles createRectangles) {
@@ -34,15 +49,21 @@ public class Bottles {
         return -1;
     }
 
-    public Bottles findBottle(int index, CreateRectangles createRectangles) {
+    public Bottles findBottle(double x, double y, CreateRectangles createRectangles) {
 
-        return createRectangles.bottles.get(index);
+        for (int i = 0; i < 6; i++) {
 
+            if (createRectangles.bottles.get(i).getRectangle().contains(x, y)) {
+
+                return createRectangles.bottles.get(i);
+            }
+        }
+        return null;
     }
 
     public boolean isEmpty() {
 
-        if (littleRectangles.isEmpty()) {
+        if (littleRect.isEmpty()) {
 
             return true;
         }
