@@ -278,7 +278,66 @@ public class Main extends Application {
         reset.setOnAction(e -> {
             resetButton.reset();
         });
-        
+        //دکمه undo 
+         undo.setStyle(
+                "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" + // گرادیانت
+                                                                                                              // کرم
+                                                                                                              // روشن به
+                                                                                                              // کرم
+                                                                                                              // پررنگ
+                        "-fx-text-fill: rgb(139, 69, 19);" + // رنگ متن قهوه‌ای
+                        "-fx-font-size: 20px;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-padding: 12 25;" +
+                        "-fx-border-radius: 30;" +
+                        "-fx-background-radius: 30;" +
+                        "-fx-border-color: rgb(222, 184, 135);" + // رنگ حاشیه کرم
+                        "-fx-border-width: 3px;" +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(222, 184, 135, 0.7), 8, 0, 0, 6);");
+
+        undo.setOnMouseEntered(e -> {
+            undo.setStyle(
+                    "-fx-background-color: linear-gradient(to bottom, rgb(255, 218, 185), rgb(210, 180, 140));" + // کرم
+                                                                                                                  // پررنگ
+                                                                                                                  // به
+                                                                                                                  // کرم
+                                                                                                                  // تیره‌
+                            "-fx-text-fill: rgb(255, 250, 240);" + // متن سفید کرم روشن
+                            "-fx-font-size: 20px;" +
+                            "-fx-font-weight: bold;" +
+                            "-fx-padding: 12 25;" +
+                            "-fx-border-radius: 30;" +
+                            "-fx-background-radius: 30;" +
+                            "-fx-border-color: rgb(205, 133, 63);" + // حاشیه قهوه‌ای طلایی پررنگ
+                            "-fx-border-width: 3px;" +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(205, 133, 63, 0.9), 10, 0, 0, 8);");
+        });
+
+        undo.setOnMouseExited(e -> {
+            undo.setStyle(
+                    "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" +
+                            "-fx-text-fill: rgb(139, 69, 19);" +
+                            "-fx-font-size: 20px;" +
+                            "-fx-font-weight: bold;" +
+                            "-fx-padding: 12 25;" +
+                            "-fx-border-radius: 30;" +
+                            "-fx-background-radius: 30;" +
+                            "-fx-border-color: rgb(222, 184, 135);" +
+                            "-fx-border-width: 3px;" +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(222, 184, 135, 0.7), 8, 0, 0, 6);");
+        });
+
+        undo.setLayoutX(170);
+        undo.setLayoutY(50);
+        pane.getChildren().add(undo);
+
+        undo.setOnAction(e -> {
+            if (!undoStack.isEmpty()) {
+                
+
+            }
+            
+        });
         
         // دکمه های هشدار
 
