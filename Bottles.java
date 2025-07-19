@@ -37,18 +37,6 @@ public class Bottles {
         return littleRect;
     }
 
-    public int findindex(double x, double y, CreateRectangles createRectangles) {
-
-        for (int i = 0; i < 6; i++) {
-
-            if (createRectangles.bottles.get(i).getRectangle().contains(x, y)) {
-
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public Bottles findBottle(double x, double y, CreateRectangles createRectangles) {
 
         for (int i = 0; i < 6; i++) {
