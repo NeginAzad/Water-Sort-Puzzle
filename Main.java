@@ -205,6 +205,8 @@ public class Main extends Application {
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: linear-gradient(to bottom,rgb(235, 237, 218), #c2e9fb);");
         Bottles bottle = new Bottles();
+        Bottles[] bottle1 = new Bottles[1];
+        Bottles[] bottle2 = new Bottles[1];
         int[] counter = { 0 };
         ColorArrangment colorArrangment = new ColorArrangment();
         CreateRectangles createRectangles = new CreateRectangles();
@@ -361,7 +363,55 @@ public class Main extends Application {
 
             pane.getChildren().addAll(createRectangles.bottles.get(i).group);
         }
+        pane.setOnMouseClicked(event -> {
 
+            label1.setVisible(false);
+            label2.setVisible(false);
+            label3.setVisible(false);
+            label4.setVisible(false);
+
+            double x = event.getX();
+            double y = event.getY();
+
+            if (bottle.findBottle(x, y, createRectangles) != null && counter[0] == 0) {
+
+                bottle1[0] = bottle.findBottle(x, y, createRectangles);
+
+                if (bottle1[0].isEmpty()) {
+
+                    label1.setVisible(true);
+                } else {
+
+                    counter[0] = 1;
+                }
+            } 
+            else if (bottle.findBottle(x, y, createRectangles) != null && counter[0] == 1) {
+
+                bottle2[0] = bottle.findBottle(x, y, createRectangles);
+
+                if (bottle1[0] == bottle2[0]) {
+
+                    label4.setVisible(true);
+
+                } else if (bottle2[0].getStack().size() == 4) {
+
+                    label2.setVisible(true);
+                } else {
+
+                    if (bottle2[0].match(bottle1[0])) {
+
+                        bottle1[0].animation(bottle2[0], createRectangles, stage);
+                    }
+
+                    else {
+
+                        label3.setVisible(true);
+
+                    }
+                }
+                counter[0] = 0;
+            }
+        });
     }
 
     public static void main(String[] args) {
