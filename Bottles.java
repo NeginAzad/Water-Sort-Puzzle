@@ -144,7 +144,7 @@ public class Bottles {
                 for (int j = 1; j < 4; j++) {
 
                     if (!(first.equals((Color) createRectangles.bottles.get(i).getStack().get(j).getFill()))) {
-                        
+
                         same = false;
                         break;
                     }
@@ -158,100 +158,84 @@ public class Bottles {
         return counter == 4;
     }
 
-    public void animation(Bottles bot, Rectangle rect, CreateRectangles createRectangles, Stage stage) {
+    public void animation(Bottles bottle2 , CreateRectangles createRectangles, Stage stage) {
 
-        // انیمیشن رفتن
+        ParallelTransition pt1 = new ParallelTransition();
+        ParallelTransition pt2 = new ParallelTransition();
+
+        // انیمیشن رفت
+
         TranslateTransition t1 = new TranslateTransition(Duration.seconds(1), group);
         RotateTransition r1 = new RotateTransition(Duration.seconds(1), group);
-        ParallelTransition pt1 = new ParallelTransition();
 
         t1.setByY(-150);
 
-        if (rect.getX() > rectangle.getX()) {
+        if (bottle2.getRectangle().getX() > rectangle.getX()) {
 
-            t1.setByX(rect.getX() - 40 - rectangle.getX());
+            t1.setByX(bottle2.getRectangle().getX() - 40 - rectangle.getX());
             r1.setByAngle(20);
         } else {
 
-            double displacement = rectangle.getX() - (rect.getX() + 50);
+            double displacement = rectangle.getX() - (bottle2.getRectangle().getX() + 50);
 
             t1.setByX(-displacement);
             r1.setByAngle(-20);
         }
         pt1.getChildren().addAll(t1, r1);
 
-        // انیمیشن اب
-
-        Timeline timeline1 = new Timeline(
-                new KeyFrame(Duration.seconds(0), new KeyValue(findToppestRect().heightProperty(), 50),
-                        new KeyValue(findToppestRect().yProperty(), findToppestRect().getY())),
-                new KeyFrame(Duration.seconds(1), new KeyValue(findToppestRect().heightProperty(), 0),
-                        new KeyValue(findToppestRect().yProperty(), findToppestRect().getY() + 50)));
-
-        Timeline timeline2 = new Timeline();
-
-        KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0), new KeyValue(rect.heightProperty(), 0),
-                new KeyValue(rect.yProperty(), rect.getY()));
-        KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(1), new KeyValue(rect.heightProperty(), 50),
-                new KeyValue(rect.yProperty(), rect.getY() - 50));
-        timeline2.getKeyFrames().addAll(keyFrame1, keyFrame2);
-
-        // انیمیشن برگشت
+        //انیمیشن برگشت
 
         TranslateTransition t2 = new TranslateTransition(Duration.seconds(1), group);
         RotateTransition r2 = new RotateTransition(Duration.seconds(1), group);
-        ParallelTransition pt2 = new ParallelTransition();
 
         t2.setByY(150);
 
-        if (rect.getX() > rectangle.getX()) {
+        if (bottle2.getRectangle().getX() > rectangle.getX()) {
 
-            t2.setByX(-(rect.getX() - 40 - rectangle.getX()));
+            t2.setByX(-(bottle2.getRectangle().getX() - 40 - rectangle.getX()));
             r2.setByAngle(-20);
-        } else {
+        } 
+        else {
 
-            double displacement = rectangle.getX() - (rect.getX() + 50);
+            double displacement = rectangle.getX() - (bottle2.getRectangle().getX() + 50);
 
             t2.setByX(displacement);
             r2.setByAngle(20);
         }
         pt2.getChildren().addAll(t2, r2);
 
-        pt1.setOnFinished(e -> {
+        // انیمیشن اب
 
-            timeline2.setOnFinished(event -> {
+        SequentialTransition seq1 = new SequentialTransition();
+        SequentialTransition seq2 = new SequentialTransition();
+        SequentialTransition seq3 = new SequentialTransition();
 
-                delete();
+        ArrayList<Rectangle> shouldDelete = new ArrayList<>();
+    
 
-                if (bot.getLittleRectangles().size() != 0) {
+        for (int i = 0; i < bottle2.matchedRect.size(); i++) {
+            
 
-                    bot.add(rect);
-                } else {
-                    rect.setHeight(50);
-                    bot.add(rect);
-                }
-                if (isWin(createRectangles)) {
+            Timeline timeline1 = new Timeline(
+                    new KeyFrame(Duration.seconds(0), new KeyValue(littleRect.peek().heightProperty(), 50),
+                            new KeyValue(littleRect.peek().yProperty(), littleRect.peek().getY())),
+                    new KeyFrame(Duration.seconds(1), new KeyValue(littleRect.peek().heightProperty(), 0),
+                            new KeyValue(littleRect.peek().yProperty(), littleRect.peek().getY() + 50)));
 
-                    PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
-                    pause.setOnFinished(ev -> {
+            shouldDelete.add(littleRect.pop());               
 
-                        Main main = new Main();
-                        main.counterWin++;
-                        main.showStartScene(stage);
+            Timeline timeline2 = new Timeline();
 
-                    });
-                    pause.play();
-                }
-                pt2.play();
-
-            });
-            timeline1.play();
-            timeline2.play();
-            MusicPourWater mediaPlayer = new MusicPourWater();
-            mediaPlayer.play();
-
-        });
-        pt1.play();
+            KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0), new KeyValue(bottle2.matchedRect.get(i).heightProperty(), 0),
+                    new KeyValue(bottle2.matchedRect.get(i).yProperty(),bottle2.matchedRect.get(i).getY()));
+            KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(1), new KeyValue(bottle2.matchedRect.get(i).heightProperty(), 50),
+                    new KeyValue(bottle2.matchedRect.get(i).yProperty(), bottle2.matchedRect.get(i).getY() - 50));
+            timeline2.getKeyFrames().addAll(keyFrame1, keyFrame2);
+            
+            seq1.getChildren().add(timeline1);
+            seq2.getChildren().add(timeline2);
+        }
+        
 
     }
 }
