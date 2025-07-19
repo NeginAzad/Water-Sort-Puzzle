@@ -137,15 +137,14 @@ public class Bottles {
 
         for (int i = 0; i < 6; i++) {
 
-            if (createRectangles.bottles.get(i).getLittleRectangles().size() == 4) {
+            if (createRectangles.bottles.get(i).getStack().size() == 4) {
 
-                Color first = (Color) createRectangles.bottles.get(i).getLittleRectangles().get(0).getFill();
+                Color first = (Color) createRectangles.bottles.get(i).getStack().get(0).getFill();
 
                 for (int j = 1; j < 4; j++) {
 
-                    if (!(first
-                            .equals((Color) createRectangles.bottles.get(i).getLittleRectangles().get(j).getFill()))) {
-
+                    if (!(first.equals((Color) createRectangles.bottles.get(i).getStack().get(j).getFill()))) {
+                        
                         same = false;
                         break;
                     }
