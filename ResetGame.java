@@ -9,7 +9,8 @@ public class ResetGame {
     private ArrayList<Bottles> bottles;
 
     public ResetGame(Pane pane, ArrayList<Bottles> bottles,CreateRectangles createRectangles,int random ) {
-        this.createRectangles=createRectangles;
+        
+        this.createRectangles = createRectangles;
         this.pane = pane;
         this.bottles = bottles;
         this.random=random;
@@ -19,8 +20,8 @@ public class ResetGame {
 
         for (Bottles bottle : bottles){
 
-            bottle.group.getChildren().removeAll(bottle.getLittleRectangles());
-            bottle.getLittleRectangles().clear();
+            bottle.group.getChildren().removeAll(bottle.getStack());
+            bottle.getStack().clear();
         }
 
         ColorArrangment colorArrangment = new ColorArrangment();
