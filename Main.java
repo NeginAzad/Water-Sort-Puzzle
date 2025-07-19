@@ -207,7 +207,6 @@ public class Main extends Application {
         pane.setStyle("-fx-background-color: linear-gradient(to bottom,rgb(235, 237, 218), #c2e9fb);");
         Bottles bottle = new Bottles();
         int[] counter = { 0 };
-        Bottles bottle = new Bottles();
         Bottles[] bottle1 = new Bottles[1];
         Bottles[] bottle2 = new Bottles[1];
 
