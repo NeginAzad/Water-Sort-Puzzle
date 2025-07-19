@@ -70,13 +70,50 @@ public class Bottles {
         return false;
     }
 
-    public boolean matchColor(Rectangle rect) {
+    public boolean match(Bottles bottle1) {
 
-        if (findToppestRect().getFill() == rect.getFill()) {
+        matchedRect.clear();
 
-            return true;
+        Color top = (Color) bottle1.getStack().peek().getFill();
+        int index1 = bottle1.getStack().size() - 1;
+        int index2 = littleRect.size() - 1;
+        double y;
+        boolean isMatch = false;
+        int i = 0;
+
+        if (littleRect.size() == 0) {
+
+            y = 410;
+        } else {
+
+            y = littleRect.peek().getY();
         }
-        return false;
+
+        if (littleRect.size() == 0 || top == littleRect.peek().getFill()) {
+
+            isMatch = true;
+
+            while (bottle1.getStack().get(index1).getFill() == top && (index1 >= 0 && index2 < 3)) {
+
+                Rectangle rect = new Rectangle(rectangle.getX(), y - (i * 50), 60, 0);
+                rect.setFill(top);
+                matchedRect.add(rect);
+                i++;
+                index1--;
+                index2++;
+
+                // اگر داخل شرط وایل این را چک کند دچار خطا می شود برای همین قبل از رفتن به
+                // ابتدای حلقه باید چک شود
+
+                if (index1 < 0 || index2 > 3) {
+
+                    break;
+                }
+
+            }
+        }
+        group.getChildren().addAll(matchedRect);
+        return isMatch;
     }
 
     public void add(Rectangle rect) {
@@ -145,8 +182,7 @@ public class Bottles {
 
             t1.setByX(rect.getX() - 40 - rectangle.getX());
             r1.setByAngle(20);
-        }
-         else {
+        } else {
 
             double displacement = rectangle.getX() - (rect.getX() + 50);
 
@@ -183,8 +219,7 @@ public class Bottles {
 
             t2.setByX(-(rect.getX() - 40 - rectangle.getX()));
             r2.setByAngle(-20);
-        } 
-        else {
+        } else {
 
             double displacement = rectangle.getX() - (rect.getX() + 50);
 
@@ -202,8 +237,7 @@ public class Bottles {
                 if (bot.getLittleRectangles().size() != 0) {
 
                     bot.add(rect);
-                } 
-                else {
+                } else {
                     rect.setHeight(50);
                     bot.add(rect);
                 }
