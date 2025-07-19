@@ -357,6 +357,10 @@ public class Main extends Application {
                 createRectangles.littleRect(colorArrangment.type5());
                 break;
         }
+        for (int i = 0; i < 6; i++) {
+
+            pane.getChildren().addAll(createRectangles.bottles.get(i).group);
+        }
 
     }
 
