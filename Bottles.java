@@ -70,22 +70,6 @@ public class Bottles {
         return false;
     }
 
-    public Rectangle findToppestRect() {
-
-        double minY = littleRectangles.get(0).getY();
-        index = 0;
-
-        for (int i = 0; i < littleRectangles.size(); i++) {
-
-            if (minY > littleRectangles.get(i).getY()) {
-
-                minY = littleRectangles.get(i).getY();
-                index = i;
-            }
-        }
-        return littleRectangles.get(index);
-    }
-
     public boolean matchColor(Rectangle rect) {
 
         if (findToppestRect().getFill() == rect.getFill()) {
