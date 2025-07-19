@@ -23,6 +23,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Main extends Application {
+
+    int counterWin = 0;
+    
 public void showVictoryAnimation(Pane pane) {
 
     for (int i = 0; i < 25; i++) {
