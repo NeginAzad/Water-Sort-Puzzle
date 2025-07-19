@@ -97,19 +97,7 @@ public class Bottles {
 
     public void add(Rectangle rect) {
 
-        Rectangle rec = new Rectangle(rect.getX(), rect.getY(), 60, 50);
-        rec.setFill(rect.getFill());
-        rec.setX(rectangle.getX());
-
-        if (littleRectangles.size() != 0) {
-
-            rec.setY(findToppestRect().getY() - 50);
-        } else {
-            rec.setY(360);
-        }
-        group.getChildren().remove(rect);
-        littleRectangles.add(rec);
-        group.getChildren().add(rec);
+        littleRectangles.add(rect);
     }
 
     public void delete() {
@@ -214,15 +202,8 @@ public class Bottles {
             timeline2.setOnFinished(event -> {
 
                 delete();
-
-                if (bot.getLittleRectangles().size() != 0) {
-
-                    bot.add(rect);
-                } 
-                else {
-                    rect.setHeight(50);
-                    bot.add(rect);
-                }
+                bot.add(rect);
+                
                 if (isWin(createRectangles)) {
 
                     PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
