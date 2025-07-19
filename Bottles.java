@@ -235,7 +235,44 @@ public class Bottles {
             seq1.getChildren().add(timeline1);
             seq2.getChildren().add(timeline2);
         }
-        
+        MusicPourWater waterSound = new MusicPourWater();
 
+        for(int j = 0 ; j < seq1.getChildren().size() ; j++){
+
+            
+            PauseTransition sound = new PauseTransition(Duration.millis(j));
+            sound.setOnFinished(e -> {
+
+                waterSound.play();
+            });
+            ParallelTransition pt3 = new ParallelTransition();
+            pt3.getChildren().addAll(seq1.getChildren().get(j) , seq2.getChildren().get(j) , sound);
+            seq3.getChildren().add(pt3);
+        }
+
+        pt1.setOnFinished(e -> {
+
+            seq3.setOnFinished(event ->{
+
+                delete(shouldDelete);
+                bottle2.add();
+                pt2.play();
+                if(isWin(createRectangles)){
+
+                    PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+                    pause.setOnFinished(ev -> {
+
+                        Main main = new Main();
+                        main.counterWin++;
+                        main.showStartScene(stage);
+
+                    });
+                    pause.play();
+                }
+
+            });
+            seq3.play();
+        });
+        pt1.play();
     }
 }
