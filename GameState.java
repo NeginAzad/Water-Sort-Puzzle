@@ -13,7 +13,7 @@ public class GameState {
             ArrayList<Double> bottleHeights = new ArrayList<>();
             ArrayList<Double> bottleYs = new ArrayList<>();
 
-            for (Rectangle rect : bottle.getLittleRectangles()) {
+            for (Rectangle rect : bottle.getStack()) {
                 bottleColors.add((Color) rect.getFill());
                 bottleHeights.add(rect.getHeight());
                 bottleYs.add(rect.getY());
