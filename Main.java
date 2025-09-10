@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Stack;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
@@ -90,12 +93,14 @@ public class Main extends Application {
     }
 
     public void start(Stage stage) throws Exception {
+
         BackGroundMusic back = new BackGroundMusic();
         back.play();
         showStartScene(stage);
     }
 
     public void showStartScene(Stage stage) {
+
         Pane pane = new Pane();
 
         if (counterWin != 0) {
@@ -205,11 +210,18 @@ public class Main extends Application {
         pane.setStyle("-fx-background-color: linear-gradient(to bottom,rgb(235, 237, 218), #c2e9fb);");
         Bottles bottle = new Bottles();
         int[] counter = { 0 };
-        ColorArrangment colorArrangment = new ColorArrangment();
+        Bottles[] bottle1 = new Bottles[1];
+        Bottles[] bottle2 = new Bottles[1];
+
+        Stack<GameState> undoStack = new Stack<>();
+
         CreateRectangles createRectangles = new CreateRectangles();
+        ColorArrangment colorArrangment = new ColorArrangment();
 
         ResetGame resetButton = new ResetGame(pane, createRectangles.bottles, createRectangles, random);
         Button reset = new Button("RESET");
+
+        Button undo = new Button("UNDO");
 
         reset.setStyle(
                 "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" + // گرادیانت
@@ -266,6 +278,69 @@ public class Main extends Application {
         reset.setOnAction(e -> {
             resetButton.reset();
         });
+
+        //دکمه undo 
+         undo.setStyle(
+                "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" + // گرادیانت
+                                                                                                              // کرم
+                                                                                                              // روشن به
+                                                                                                              // کرم
+                                                                                                              // پررنگ
+                        "-fx-text-fill: rgb(139, 69, 19);" + // رنگ متن قهوه‌ای
+                        "-fx-font-size: 20px;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-padding: 12 25;" +
+                        "-fx-border-radius: 30;" +
+                        "-fx-background-radius: 30;" +
+                        "-fx-border-color: rgb(222, 184, 135);" + // رنگ حاشیه کرم
+                        "-fx-border-width: 3px;" +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(222, 184, 135, 0.7), 8, 0, 0, 6);");
+
+        undo.setOnMouseEntered(e -> {
+            undo.setStyle(
+                    "-fx-background-color: linear-gradient(to bottom, rgb(255, 218, 185), rgb(210, 180, 140));" + // کرم
+                                                                                                                  // پررنگ
+                                                                                                                  // به
+                                                                                                                  // کرم
+                                                                                                                  // تیره‌
+                            "-fx-text-fill: rgb(255, 250, 240);" + // متن سفید کرم روشن
+                            "-fx-font-size: 20px;" +
+                            "-fx-font-weight: bold;" +
+                            "-fx-padding: 12 25;" +
+                            "-fx-border-radius: 30;" +
+                            "-fx-background-radius: 30;" +
+                            "-fx-border-color: rgb(205, 133, 63);" + // حاشیه قهوه‌ای طلایی پررنگ
+                            "-fx-border-width: 3px;" +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(205, 133, 63, 0.9), 10, 0, 0, 8);");
+        });
+
+        undo.setOnMouseExited(e -> {
+            undo.setStyle(
+                    "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" +
+                            "-fx-text-fill: rgb(139, 69, 19);" +
+                            "-fx-font-size: 20px;" +
+                            "-fx-font-weight: bold;" +
+                            "-fx-padding: 12 25;" +
+                            "-fx-border-radius: 30;" +
+                            "-fx-background-radius: 30;" +
+                            "-fx-border-color: rgb(222, 184, 135);" +
+                            "-fx-border-width: 3px;" +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(222, 184, 135, 0.7), 8, 0, 0, 6);");
+        });
+
+        undo.setLayoutX(170);
+        undo.setLayoutY(50);
+        pane.getChildren().add(undo);
+
+
+        undo.setOnAction(e -> {
+            if (!undoStack.isEmpty()) {
+                
+
+            }
+            
+        });
+        
         // دکمه های هشدار
 
         Label label1 = new Label("the chosen bottle is empty!");
@@ -317,7 +392,7 @@ public class Main extends Application {
                         "-fx-font-weight: bold;");
         label3.setVisible(false);
         pane.getChildren().add(label3);
-        Label label4 = new Label("bottles are the same");
+        Label label4 = new Label("bottle are the same");
         label4.setLayoutX(300);
         label4.setLayoutY(10);
         label4.setTextFill(Color.MEDIUMPURPLE);
@@ -333,11 +408,6 @@ public class Main extends Application {
                         "-fx-font-weight: bold;");
         label4.setVisible(false);
         pane.getChildren().add(label4);
-
-        Rectangle[] toppestRect1 = new Rectangle[1];
-        Rectangle[] toppestRect2 = new Rectangle[1];
-        int[] index1 = new int[1];
-        int[] index2 = new int[1];
 
         switch (random) {
             case 1:
@@ -377,59 +447,44 @@ public class Main extends Application {
             double y = event.getY();
 
             // بررسی بطری مبدا
+            if (bottle.findBottle(x, y, createRectangles) != null && counter[0] == 0) {
 
-            if (bottle.findindex(x, y, createRectangles) != -1 && counter[0] == 0) {
+                bottle1[0] = bottle.findBottle(x, y, createRectangles);
 
-                index1[0] = bottle.findindex(x, y, createRectangles);
+                if (bottle1[0].isEmpty()) {
 
-                if (bottle.findBottle(index1[0], createRectangles).isEmpty()) {
 
                     label1.setVisible(true);
                 } else {
 
-                    toppestRect1[0] = createRectangles.bottles.get(index1[0]).findToppestRect();
                     counter[0] = 1;
                 }
             }
             // بررسی بطری مقصد
-            else if (bottle.findindex(x, y, createRectangles) != -1 && counter[0] == 1) {
 
-                index2[0] = bottle.findindex(x, y, createRectangles);
-                // هشدار جهت یکسان بودن بطری مبدا و مقصد
-                if (createRectangles.bottles.get(index1[0]) == createRectangles.bottles.get(index2[0])) {
+            else if (bottle.findBottle(x, y, createRectangles) != null && counter[0] == 1) {
+
+                bottle2[0] = bottle.findBottle(x, y, createRectangles);
+
+                if (bottle1[0] == bottle2[0]) {
 
                     label4.setVisible(true);
-                }
-                // بررسی پر بودن بطری مقصد
-                else if (createRectangles.bottles.get(index2[0]).getLittleRectangles().size() == 4) {
+
+                } else if (bottle2[0].getStack().size() == 4) {
 
                     label2.setVisible(true);
                 } else {
-                    // بررسی خالی بودن بطری مقصد
-                    if (createRectangles.bottles.get(index2[0]).getLittleRectangles().size() == 0) {
 
-                        Rectangle noHight = new Rectangle(createRectangles.bottles.get(index2[0]).getRectangle().getX(),
-                                410, 60, 0);
-                        noHight.setFill(toppestRect1[0].getFill());
-                        createRectangles.bottles.get(index2[0]).group.getChildren().add(noHight);
-                        createRectangles.bottles.get(index1[0]).animation(createRectangles.bottles.get(index2[0]),
-                                noHight, createRectangles, stage);
+                    if (bottle2[0].match(bottle1[0])) {    
+                            undoStack.push(new GameState(createRectangles.bottles));
+                             bottle1 [0].animation(bottle2[0], createRectangles, stage);
+
+        
                     }
-                    // بررسی بالاترین رنگ بطری مقصد
-                    else if (createRectangles.bottles.get(index2[0]).matchColor(toppestRect1[0])) {
 
-                        toppestRect2[0] = createRectangles.bottles.get(index2[0]).findToppestRect();
-                        Rectangle noHight = new Rectangle(createRectangles.bottles.get(index2[0]).getRectangle().getX(),
-                                toppestRect2[0].getY(), 60, 0);
-                        noHight.setFill(toppestRect2[0].getFill());
-                        createRectangles.bottles.get(index2[0]).group.getChildren().add(noHight);
-                        createRectangles.bottles.get(index1[0]).animation(createRectangles.bottles.get(index2[0]),
-                                noHight, createRectangles, stage);
-
-                    } else {
+                    else{
                         label3.setVisible(true);
 
-                        System.out.println("warning");
                     }
                 }
                 counter[0] = 0;
@@ -441,6 +496,34 @@ public class Main extends Application {
         stage.show();
     }
 
+
+    public void restoreState(GameState state, ArrayList<Bottles> bottles) {
+    for (int i = 0; i < bottles.size(); i++) {
+        Bottles bottle = bottles.get(i);
+
+        // حذف مستطیل‌ها از group (به‌جز بطری اصلی)
+        bottle.group.getChildren().removeIf(n -> n instanceof Rectangle && n != bottle.getRectangle());
+
+        // پاک کردن لیست فعلی
+        bottle.getStack().clear();
+
+        for (int j = 0; j < state.colors.get(i).size(); j++) {
+            Color color = state.colors.get(i).get(j);
+            double height = state.heights.get(i).get(j);
+            double y = state.yPositions.get(i).get(j);
+            double x = bottle.getRectangle().getX();
+
+            Rectangle r = new Rectangle(x, y, 60, height);
+            r.setFill(color);
+
+            bottle.getStack().push(r);
+        }
+
+        bottle.group.getChildren().addAll(bottle.getStack());
+    }
+}
+
+    
     public static void main(String[] args) {
 
         launch(args);

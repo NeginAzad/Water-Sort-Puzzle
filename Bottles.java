@@ -12,14 +12,14 @@ import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import java.util.Stack;
 
 public class Bottles {
 
-    private ArrayList<Rectangle> littleRectangles = new ArrayList<>();
+    private Stack<Rectangle> littleRect = new Stack<>();
+    private ArrayList<Rectangle> matchedRect = new ArrayList<>();
     private Rectangle rectangle = new Rectangle();
     Group group = new Group();
-    // ایندکس بالاترین مستطیل
-    private int index;
 
     public void setRectangle(Rectangle rectangle) {
 
@@ -32,73 +32,89 @@ public class Bottles {
         return rectangle;
     }
 
-    public ArrayList<Rectangle> getLittleRectangles() {
+    public Stack<Rectangle> getStack() {
 
-        return littleRectangles;
+        return littleRect;
     }
 
-    public int findindex(double x, double y, CreateRectangles createRectangles) {
+    public Bottles findBottle(double x, double y, CreateRectangles createRectangles) {
 
         for (int i = 0; i < 6; i++) {
 
             if (createRectangles.bottles.get(i).getRectangle().contains(x, y)) {
 
-                return i;
+                return createRectangles.bottles.get(i);
             }
         }
-        return -1;
-    }
-
-    public Bottles findBottle(int index, CreateRectangles createRectangles) {
-
-        return createRectangles.bottles.get(index);
-
+        return null;
     }
 
     public boolean isEmpty() {
 
-        if (littleRectangles.isEmpty()) {
+        if (littleRect.isEmpty()) {
 
             return true;
         }
         return false;
     }
 
-    public Rectangle findToppestRect() {
+    public boolean match(Bottles bottle1) {
 
-        double minY = littleRectangles.get(0).getY();
-        index = 0;
+        matchedRect.clear();
 
-        for (int i = 0; i < littleRectangles.size(); i++) {
+        Color top = (Color) bottle1.getStack().peek().getFill();
+        int index1 = bottle1.getStack().size() - 1;
+        int index2 = littleRect.size() - 1;
+        double y;
+        boolean isMatch = false;
+        int i = 0;
 
-            if (minY > littleRectangles.get(i).getY()) {
+        if (littleRect.size() == 0) {
 
-                minY = littleRectangles.get(i).getY();
-                index = i;
+            y = 410;
+        } else {
+
+            y = littleRect.peek().getY();
+        }
+
+        if (littleRect.size() == 0 || top == littleRect.peek().getFill()) {
+
+            isMatch = true;
+
+            while (bottle1.getStack().get(index1).getFill() == top && (index1 >= 0 && index2 < 3)) {
+
+                Rectangle rect = new Rectangle(rectangle.getX(), y - (i * 50), 60, 0);
+                rect.setFill(top);
+                matchedRect.add(rect);
+                i++;
+                index1--;
+                index2++;
+
+                // اگر داخل شرط وایل این را چک کند دچار خطا می شود برای همین قبل از رفتن به
+                // ابتدای حلقه باید چک شود
+
+                if (index1 < 0 || index2 > 3) {
+
+                    break;
+                }
+
             }
         }
-        return littleRectangles.get(index);
+        group.getChildren().addAll(matchedRect);
+        return isMatch;
     }
 
-    public boolean matchColor(Rectangle rect) {
+    public void add() {
 
-        if (findToppestRect().getFill() == rect.getFill()) {
+        for(int i = 0 ; i < matchedRect.size() ; i++){
 
-            return true;
+            littleRect.push(matchedRect.get(i));
         }
-        return false;
     }
+    public void delete(ArrayList<Rectangle> shouldDelete) {
 
-    public void add(Rectangle rect) {
-
-        littleRectangles.add(rect);
-    }
-
-    public void delete() {
-
-        group.getChildren().remove(littleRectangles.get(index));
-        littleRectangles.remove(index);
-
+        group.getChildren().removeAll(shouldDelete);
+        
     }
 
     public boolean isWin(CreateRectangles createRectangles) {
@@ -108,14 +124,13 @@ public class Bottles {
 
         for (int i = 0; i < 6; i++) {
 
-            if (createRectangles.bottles.get(i).getLittleRectangles().size() == 4) {
+            if (createRectangles.bottles.get(i).getStack().size() == 4) {
 
-                Color first = (Color) createRectangles.bottles.get(i).getLittleRectangles().get(0).getFill();
+                Color first = (Color) createRectangles.bottles.get(i).getStack().get(0).getFill();
 
                 for (int j = 1; j < 4; j++) {
 
-                    if (!(first
-                            .equals((Color) createRectangles.bottles.get(i).getLittleRectangles().get(j).getFill()))) {
+                    if (!(first.equals((Color) createRectangles.bottles.get(i).getStack().get(j).getFill()))) {
 
                         same = false;
                         break;
@@ -130,75 +145,106 @@ public class Bottles {
         return counter == 4;
     }
 
-    public void animation(Bottles bot, Rectangle rect, CreateRectangles createRectangles, Stage stage) {
+    public void animation(Bottles bottle2 , CreateRectangles createRectangles, Stage stage) {
 
-        // انیمیشن رفتن
+        ParallelTransition pt1 = new ParallelTransition();
+        ParallelTransition pt2 = new ParallelTransition();
+
+        // انیمیشن رفت
+
         TranslateTransition t1 = new TranslateTransition(Duration.seconds(1), group);
         RotateTransition r1 = new RotateTransition(Duration.seconds(1), group);
-        ParallelTransition pt1 = new ParallelTransition();
 
         t1.setByY(-150);
 
-        if (rect.getX() > rectangle.getX()) {
+        if (bottle2.getRectangle().getX() > rectangle.getX()) {
 
-            t1.setByX(rect.getX() - 40 - rectangle.getX());
+            t1.setByX(bottle2.getRectangle().getX() - 40 - rectangle.getX());
             r1.setByAngle(20);
-        }
-         else {
+        } else {
 
-            double displacement = rectangle.getX() - (rect.getX() + 50);
+            double displacement = rectangle.getX() - (bottle2.getRectangle().getX() + 50);
 
             t1.setByX(-displacement);
             r1.setByAngle(-20);
         }
         pt1.getChildren().addAll(t1, r1);
 
-        // انیمیشن اب
-
-        Timeline timeline1 = new Timeline(
-                new KeyFrame(Duration.seconds(0), new KeyValue(findToppestRect().heightProperty(), 50),
-                        new KeyValue(findToppestRect().yProperty(), findToppestRect().getY())),
-                new KeyFrame(Duration.seconds(1), new KeyValue(findToppestRect().heightProperty(), 0),
-                        new KeyValue(findToppestRect().yProperty(), findToppestRect().getY() + 50)));
-
-        Timeline timeline2 = new Timeline();
-
-        KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0), new KeyValue(rect.heightProperty(), 0),
-                new KeyValue(rect.yProperty(), rect.getY()));
-        KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(1), new KeyValue(rect.heightProperty(), 50),
-                new KeyValue(rect.yProperty(), rect.getY() - 50));
-        timeline2.getKeyFrames().addAll(keyFrame1, keyFrame2);
-
-        // انیمیشن برگشت
+        //انیمیشن برگشت
 
         TranslateTransition t2 = new TranslateTransition(Duration.seconds(1), group);
         RotateTransition r2 = new RotateTransition(Duration.seconds(1), group);
-        ParallelTransition pt2 = new ParallelTransition();
 
         t2.setByY(150);
 
-        if (rect.getX() > rectangle.getX()) {
+        if (bottle2.getRectangle().getX() > rectangle.getX()) {
 
-            t2.setByX(-(rect.getX() - 40 - rectangle.getX()));
+            t2.setByX(-(bottle2.getRectangle().getX() - 40 - rectangle.getX()));
             r2.setByAngle(-20);
         } 
         else {
 
-            double displacement = rectangle.getX() - (rect.getX() + 50);
+            double displacement = rectangle.getX() - (bottle2.getRectangle().getX() + 50);
 
             t2.setByX(displacement);
             r2.setByAngle(20);
         }
         pt2.getChildren().addAll(t2, r2);
 
+        // انیمیشن اب
+
+        SequentialTransition seq1 = new SequentialTransition();
+        SequentialTransition seq2 = new SequentialTransition();
+        SequentialTransition seq3 = new SequentialTransition();
+
+        ArrayList<Rectangle> shouldDelete = new ArrayList<>();
+    
+
+        for (int i = 0; i < bottle2.matchedRect.size(); i++) {
+            
+
+            Timeline timeline1 = new Timeline(
+                    new KeyFrame(Duration.seconds(0), new KeyValue(littleRect.peek().heightProperty(), 50),
+                            new KeyValue(littleRect.peek().yProperty(), littleRect.peek().getY())),
+                    new KeyFrame(Duration.seconds(1), new KeyValue(littleRect.peek().heightProperty(), 0),
+                            new KeyValue(littleRect.peek().yProperty(), littleRect.peek().getY() + 50)));
+
+            shouldDelete.add(littleRect.pop());               
+
+            Timeline timeline2 = new Timeline();
+
+            KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0), new KeyValue(bottle2.matchedRect.get(i).heightProperty(), 0),
+                    new KeyValue(bottle2.matchedRect.get(i).yProperty(),bottle2.matchedRect.get(i).getY()));
+            KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(1), new KeyValue(bottle2.matchedRect.get(i).heightProperty(), 50),
+                    new KeyValue(bottle2.matchedRect.get(i).yProperty(), bottle2.matchedRect.get(i).getY() - 50));
+            timeline2.getKeyFrames().addAll(keyFrame1, keyFrame2);
+            
+            seq1.getChildren().add(timeline1);
+            seq2.getChildren().add(timeline2);
+        }
+        MusicPourWater waterSound = new MusicPourWater();
+
+        for(int j = 0 ; j < seq1.getChildren().size() ; j++){
+
+            
+            PauseTransition sound = new PauseTransition(Duration.millis(j));
+            sound.setOnFinished(e -> {
+
+                waterSound.play();
+            });
+            ParallelTransition pt3 = new ParallelTransition();
+            pt3.getChildren().addAll(seq1.getChildren().get(j) , seq2.getChildren().get(j) , sound);
+            seq3.getChildren().add(pt3);
+        }
+
         pt1.setOnFinished(e -> {
 
-            timeline2.setOnFinished(event -> {
+            seq3.setOnFinished(event ->{
 
-                delete();
-                bot.add(rect);
-                
-                if (isWin(createRectangles)) {
+                delete(shouldDelete);
+                bottle2.add();
+                pt2.play();
+                if(isWin(createRectangles)){
 
                     PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
                     pause.setOnFinished(ev -> {
@@ -210,16 +256,10 @@ public class Bottles {
                     });
                     pause.play();
                 }
-                pt2.play();
 
             });
-            timeline1.play();
-            timeline2.play();
-            MusicPourWater mediaPlayer = new MusicPourWater();
-            mediaPlayer.play();
-
+            seq3.play();
         });
         pt1.play();
-
     }
 }
