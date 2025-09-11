@@ -252,8 +252,8 @@ public class Main extends Application {
         Font roundedFont = Font.font("Arial", 14);
 
         // ایکون های backgroundmusic
-        ImageView bgMuteIcon = new ImageView(new Image("file:E:/mute.png"));
-        ImageView bgUnmuteIcon = new ImageView(new Image("file:E:/unmute.png"));
+        ImageView bgMuteIcon = new ImageView(new Image("file:C:\\Users\\parseh\\Desktop\\icons\\mute.png"));
+        ImageView bgUnmuteIcon = new ImageView(new Image("file:C:\\Users\\parseh\\Desktop\\icons\\unmute.png"));
         bgMuteIcon.setFitWidth(70);
         bgMuteIcon.setFitHeight(70);
         bgUnmuteIcon.setFitWidth(70);
@@ -282,8 +282,8 @@ public class Main extends Application {
         });
 
         // آیکون‌های watersound
-        ImageView waterMuteIcon = new ImageView(new Image("file:E:/mute.png"));
-        ImageView waterUnmuteIcon = new ImageView(new Image("file:E:/unmute.png"));
+        ImageView waterMuteIcon = new ImageView(new Image("file:C:\\Users\\parseh\\Desktop\\icons\\mute.png"));
+        ImageView waterUnmuteIcon = new ImageView(new Image("file:C:\\Users\\parseh\\Desktop\\icons\\unmute.png"));
         waterMuteIcon.setFitWidth(70);
         waterMuteIcon.setFitHeight(70);
         waterUnmuteIcon.setFitWidth(70);
@@ -311,7 +311,7 @@ public class Main extends Application {
         });
 
         // دکمه close
-        ImageView closeIcon = new ImageView(new Image("file:E:/close.png"));
+        ImageView closeIcon = new ImageView(new Image("file:C:\\Users\\parseh\\Desktop\\icons\\close.png"));
         closeIcon.setFitWidth(60);
         closeIcon.setFitHeight(60);
 
@@ -362,7 +362,7 @@ public class Main extends Application {
         ResetGame resetButton = new ResetGame(pane, createRectangles.bottles, createRectangles, random);
         Button reset = new Button("RESET");
 
-        ImageView Reset = new ImageView(new Image("file:E:/rff.png"));
+        ImageView Reset = new ImageView(new Image("file:C:\\Users\\parseh\\Desktop\\icons\\rff.png"));
         Reset.setFitWidth(100);
         Reset.setFitHeight(100);
 
@@ -389,10 +389,8 @@ public class Main extends Application {
         reset.setLayoutY(50);
         pane.getChildren().add(resetbuButton);
 
-        Button undo = new Button("UNDO");
-
         // دکمه undo
-        ImageView undoIcon = new ImageView(new Image("file:E:/uuu.png")); // مسیر آیکون دلخواهت
+        ImageView undoIcon = new ImageView(new Image("file:C:\\Users\\parseh\\Desktop\\icons\\uuu.png")); // مسیر آیکون دلخواهت
         undoIcon.setFitWidth(100);
         undoIcon.setFitHeight(100);
 
