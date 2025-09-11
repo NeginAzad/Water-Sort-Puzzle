@@ -31,6 +31,20 @@ public class BackGroundMusic {
             backGrounMediaPlayer.play();
         }
     }
+public void pause() {
+        if (backGrounMediaPlayer != null) {
+            backGrounMediaPlayer.pause();
+        }
+    }
 
+    public void setMute(boolean mute) {
+        if (backGrounMediaPlayer != null) {
+            backGrounMediaPlayer.setMute(mute);
+        }
+    }
+
+    public boolean isMute() {
+        return backGrounMediaPlayer != null && backGrounMediaPlayer.isMute();
+    }
    
 }

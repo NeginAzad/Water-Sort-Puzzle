@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Stack;
-
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
@@ -23,11 +22,25 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.stage.Modality;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.GaussianBlur;
 
 public class Main extends Application {
 
     int counterWin = 0;
+    static BackGroundMusic back = new BackGroundMusic();
+    static boolean waterIsMute = false;
 
     public void showVictoryAnimation(Pane pane) {
 
@@ -102,7 +115,35 @@ public class Main extends Application {
     public void showStartScene(Stage stage) {
 
         Pane pane = new Pane();
+// آیکون setting
+ImageView settingsIcon = new ImageView(new Image("file:C:\\Users\\parseh\\Desktop\\icons\\s.png"));
+settingsIcon.setFitWidth(100);
+settingsIcon.setFitHeight(100);
 
+// دکمهsetting
+Button soundSettingsBtn = new Button();
+soundSettingsBtn.setGraphic(settingsIcon);
+soundSettingsBtn.setStyle("-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;");
+
+// 
+DropShadow blueShadow = new DropShadow();
+blueShadow.setColor(Color.rgb(33, 150, 243)); // آبی پررنگ
+blueShadow.setRadius(15);
+blueShadow.setOffsetX(0);
+blueShadow.setOffsetY(0);
+
+// سایه
+soundSettingsBtn.setOnMouseEntered(e -> settingsIcon.setEffect(blueShadow));
+soundSettingsBtn.setOnMouseExited(e -> settingsIcon.setEffect(null));
+
+// عملکرد دکمه
+soundSettingsBtn.setOnAction(e -> openSoundSettingsWindow(back));
+
+// موقعیت setting
+soundSettingsBtn.setLayoutX(647);   
+soundSettingsBtn.setLayoutY(450); 
+
+pane.getChildren().add(soundSettingsBtn);
         if (counterWin != 0) {
 
             showVictoryAnimation(pane);
@@ -203,7 +244,105 @@ public class Main extends Application {
         stage.setScene(startScene);
         stage.show();
     }
+ private void openSoundSettingsWindow(BackGroundMusic back) {
+    Stage soundStage = new Stage();
+    soundStage.initStyle(StageStyle.TRANSPARENT);
 
+    Font roundedFont = Font.font("Arial", 14);
+
+    // ایکون های backgroundmusic
+    ImageView bgMuteIcon = new ImageView(new Image("file:E:/mute.png"));
+    ImageView bgUnmuteIcon = new ImageView(new Image("file:E:/unmute.png"));
+    bgMuteIcon.setFitWidth(70);
+    bgMuteIcon.setFitHeight(70);
+    bgUnmuteIcon.setFitWidth(70);
+    bgUnmuteIcon.setFitHeight(70);
+
+    Label bgLabel = new Label("Background music");
+    bgLabel.setFont(roundedFont);
+    bgLabel.setStyle("-fx-text-fill: #2196F3;");
+
+    HBox bgContent = new HBox(10, bgLabel, back.isMute() ? bgMuteIcon : bgUnmuteIcon);
+    bgContent.setAlignment(Pos.CENTER_LEFT);
+
+    Button muteBackgroundBtn = new Button();
+    muteBackgroundBtn.setGraphic(bgContent);
+    muteBackgroundBtn.setStyle("-fx-background-color: transparent;");
+    muteBackgroundBtn.setOnAction(e -> {
+        boolean isMuted = back.isMute();
+        back.setMute(!isMuted);
+        ImageView newIcon = isMuted ? bgUnmuteIcon : bgMuteIcon;
+        Label newLabel = new Label("Background music");
+        newLabel.setFont(roundedFont);
+        newLabel.setStyle("-fx-text-fill: #2196F3;");
+        HBox newContent = new HBox(10, newLabel, newIcon);
+        newContent.setAlignment(Pos.CENTER_LEFT);
+        muteBackgroundBtn.setGraphic(newContent);
+    });
+
+    // آیکون‌های watersound
+    ImageView waterMuteIcon = new ImageView(new Image("file:E:/mute.png"));
+    ImageView waterUnmuteIcon = new ImageView(new Image("file:E:/unmute.png"));
+    waterMuteIcon.setFitWidth(70);
+    waterMuteIcon.setFitHeight(70);
+    waterUnmuteIcon.setFitWidth(70);
+    waterUnmuteIcon.setFitHeight(70);
+
+    Label waterLabel = new Label("Watersound");
+    waterLabel.setFont(roundedFont);
+    waterLabel.setStyle("-fx-text-fill: #2196F3;");
+
+    HBox waterContent = new HBox(10, waterLabel, waterIsMute ? waterMuteIcon : waterUnmuteIcon);
+    waterContent.setAlignment(Pos.CENTER_LEFT);
+
+    Button muteWaterBtn = new Button();
+    muteWaterBtn.setGraphic(waterContent);
+    muteWaterBtn.setStyle("-fx-background-color: transparent;");
+    muteWaterBtn.setOnAction(e -> {
+        waterIsMute = !waterIsMute;
+        ImageView newIcon = waterIsMute ? waterMuteIcon : waterUnmuteIcon;
+        Label newLabel = new Label("Watersound");
+        newLabel.setFont(roundedFont);
+        newLabel.setStyle("-fx-text-fill: #2196F3;");
+        HBox newContent = new HBox(10, newLabel, newIcon);
+        newContent.setAlignment(Pos.CENTER_LEFT);
+        muteWaterBtn.setGraphic(newContent);
+    });
+
+    // دکمه close
+    ImageView closeIcon = new ImageView(new Image("file:E:/close.png"));
+    closeIcon.setFitWidth(60);
+    closeIcon.setFitHeight(60);
+
+    Button closeBtn = new Button();
+    closeBtn.setGraphic(closeIcon);
+    closeBtn.setStyle("-fx-background-color: transparent;");
+    closeBtn.setOnAction(e -> soundStage.close());
+
+    // نوار بالایی فقط برای کلوز
+    HBox topBar = new HBox(closeBtn);
+    topBar.setAlignment(Pos.TOP_RIGHT);
+    topBar.setPadding(new Insets(5, 5, 0, 0));
+
+    // محتوای اصلی چپ
+    VBox content = new VBox(15, muteBackgroundBtn, muteWaterBtn);
+    content.setAlignment(Pos.CENTER_LEFT);
+    content.setPadding(new Insets(10, 15, 15, 15));
+
+    // چینش
+    VBox layout = new VBox(topBar, content);
+    layout.setStyle("""
+        -fx-background-color: rgba(243, 249, 192, 1);
+        -fx-background-radius: 25;
+    """);
+
+    Scene scene = new Scene(layout, 320, 260);
+    scene.setFill(Color.TRANSPARENT);
+
+    soundStage.setScene(scene);
+    soundStage.initModality(Modality.APPLICATION_MODAL);
+    soundStage.show();
+}
     public void showGameScene(Stage stage, int random) {
 
         Pane pane = new Pane();
@@ -221,125 +360,73 @@ public class Main extends Application {
         ResetGame resetButton = new ResetGame(pane, createRectangles.bottles, createRectangles, random);
         Button reset = new Button("RESET");
 
-        Button undo = new Button("UNDO");
+       ImageView Reset = new ImageView(new Image("file:E:/rff.png"));
+        Reset.setFitWidth(100);
+        Reset.setFitHeight(100);
 
-        reset.setStyle(
-                "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" + // گرادیانت
-                                                                                                              // کرم
-                                                                                                              // روشن به
-                                                                                                              // کرم
-                                                                                                              // پررنگ
-                        "-fx-text-fill: rgb(139, 69, 19);" + // رنگ متن قهوه‌ای
-                        "-fx-font-size: 20px;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-padding: 12 25;" +
-                        "-fx-border-radius: 30;" +
-                        "-fx-background-radius: 30;" +
-                        "-fx-border-color: rgb(222, 184, 135);" + // رنگ حاشیه کرم
-                        "-fx-border-width: 3px;" +
-                        "-fx-effect: dropshadow(three-pass-box, rgba(222, 184, 135, 0.7), 8, 0, 0, 6);");
+// دکمه reset
+Button resetbuButton = new Button();
+resetbuButton.setGraphic(Reset);
+resetbuButton.setStyle("-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;");
 
-        reset.setOnMouseEntered(e -> {
-            reset.setStyle(
-                    "-fx-background-color: linear-gradient(to bottom, rgb(255, 218, 185), rgb(210, 180, 140));" + // کرم
-                                                                                                                  // پررنگ
-                                                                                                                  // به
-                                                                                                                  // کرم
-                                                                                                                  // تیره‌
-                            "-fx-text-fill: rgb(255, 250, 240);" + // متن سفید کرم روشن
-                            "-fx-font-size: 20px;" +
-                            "-fx-font-weight: bold;" +
-                            "-fx-padding: 12 25;" +
-                            "-fx-border-radius: 30;" +
-                            "-fx-background-radius: 30;" +
-                            "-fx-border-color: rgb(205, 133, 63);" + // حاشیه قهوه‌ای طلایی پررنگ
-                            "-fx-border-width: 3px;" +
-                            "-fx-effect: dropshadow(three-pass-box, rgba(205, 133, 63, 0.9), 10, 0, 0, 8);");
-        });
+// 
+DropShadow blueShadow = new DropShadow();
+blueShadow.setColor(Color.rgb(39, 3, 245, 1)); // آبی پررنگ
+blueShadow.setRadius(15);
+blueShadow.setOffsetX(0);
+blueShadow.setOffsetY(0);
 
-        reset.setOnMouseExited(e -> {
-            reset.setStyle(
-                    "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" +
-                            "-fx-text-fill: rgb(139, 69, 19);" +
-                            "-fx-font-size: 20px;" +
-                            "-fx-font-weight: bold;" +
-                            "-fx-padding: 12 25;" +
-                            "-fx-border-radius: 30;" +
-                            "-fx-background-radius: 30;" +
-                            "-fx-border-color: rgb(222, 184, 135);" +
-                            "-fx-border-width: 3px;" +
-                            "-fx-effect: dropshadow(three-pass-box, rgba(222, 184, 135, 0.7), 8, 0, 0, 6);");
-        });
+// سایه
+resetbuButton.setOnMouseEntered(e -> Reset.setEffect(blueShadow));
+resetbuButton.setOnMouseExited(e -> Reset.setEffect(null));
 
-        reset.setLayoutX(50);
-        reset.setLayoutY(50);
-        pane.getChildren().add(reset);
+// عملکرد دکمه
+resetbuButton.setOnAction(e -> resetButton.reset());
 
-        reset.setOnAction(e -> {
-            resetButton.reset();
-        });
+reset.setLayoutX(200);
+         reset.setLayoutY(50);
+         pane.getChildren().add(resetbuButton);
 
-        //دکمه undo 
-         undo.setStyle(
-                "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" + // گرادیانت
-                                                                                                              // کرم
-                                                                                                              // روشن به
-                                                                                                              // کرم
-                                                                                                              // پررنگ
-                        "-fx-text-fill: rgb(139, 69, 19);" + // رنگ متن قهوه‌ای
-                        "-fx-font-size: 20px;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-padding: 12 25;" +
-                        "-fx-border-radius: 30;" +
-                        "-fx-background-radius: 30;" +
-                        "-fx-border-color: rgb(222, 184, 135);" + // رنگ حاشیه کرم
-                        "-fx-border-width: 3px;" +
-                        "-fx-effect: dropshadow(three-pass-box, rgba(222, 184, 135, 0.7), 8, 0, 0, 6);");
+          Button undo = new Button("UNDO");
+        
+        // دکمه undo
+ImageView undoIcon = new ImageView(new Image("file:E:/uuu.png")); // مسیر آیکون دلخواهت
+undoIcon.setFitWidth(100);
+undoIcon.setFitHeight(100);
 
-        undo.setOnMouseEntered(e -> {
-            undo.setStyle(
-                    "-fx-background-color: linear-gradient(to bottom, rgb(255, 218, 185), rgb(210, 180, 140));" + // کرم
-                                                                                                                  // پررنگ
-                                                                                                                  // به
-                                                                                                                  // کرم
-                                                                                                                  // تیره‌
-                            "-fx-text-fill: rgb(255, 250, 240);" + // متن سفید کرم روشن
-                            "-fx-font-size: 20px;" +
-                            "-fx-font-weight: bold;" +
-                            "-fx-padding: 12 25;" +
-                            "-fx-border-radius: 30;" +
-                            "-fx-background-radius: 30;" +
-                            "-fx-border-color: rgb(205, 133, 63);" + // حاشیه قهوه‌ای طلایی پررنگ
-                            "-fx-border-width: 3px;" +
-                            "-fx-effect: dropshadow(three-pass-box, rgba(205, 133, 63, 0.9), 10, 0, 0, 8);");
-        });
+// دکمه undo
+Button undoButton = new Button();
+undoButton.setGraphic(undoIcon);
+undoButton.setStyle("-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;");
 
-        undo.setOnMouseExited(e -> {
-            undo.setStyle(
-                    "-fx-background-color: linear-gradient(to bottom, rgb(255, 239, 213), rgb(255, 218, 185));" +
-                            "-fx-text-fill: rgb(139, 69, 19);" +
-                            "-fx-font-size: 20px;" +
-                            "-fx-font-weight: bold;" +
-                            "-fx-padding: 12 25;" +
-                            "-fx-border-radius: 30;" +
-                            "-fx-background-radius: 30;" +
-                            "-fx-border-color: rgb(222, 184, 135);" +
-                            "-fx-border-width: 3px;" +
-                            "-fx-effect: dropshadow(three-pass-box, rgba(222, 184, 135, 0.7), 8, 0, 0, 6);");
-        });
+// 
+DropShadow blueShadow1 = new DropShadow();
+blueShadow.setColor(Color.rgb(39, 3, 245, 1)); // آبی پررنگ
+blueShadow.setRadius(15);
+blueShadow.setOffsetX(0);
+blueShadow.setOffsetY(0);
 
-        undo.setLayoutX(170);
-        undo.setLayoutY(50);
-        pane.getChildren().add(undo);
+// سایه
+undoButton.setOnMouseEntered(e -> undoIcon.setEffect(blueShadow));
+undoButton.setOnMouseExited(e -> undoIcon.setEffect(null));
 
+// عملکرد دکمه
+undoButton.setOnAction(e -> {
 
-        undo.setOnAction(e -> {
             if (!undoStack.isEmpty()) {
-                
-
+                GameState lastState = undoStack.pop();
+                restoreState(lastState, createRectangles.bottles);
             }
-            
+
         });
+
+
+// موقعیت‌
+undoButton.setLayoutX(170);
+undoButton.setLayoutY(2);
+
+
+pane.getChildren().add(undoButton);
         
         // دکمه های هشدار
 
