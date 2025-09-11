@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Stack;
 
+import javax.swing.text.html.ImageView;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
@@ -102,7 +104,35 @@ public class Main extends Application {
 
 
         Pane pane = new Pane();
+// آیکون setting
+ImageView settingsIcon = new ImageView(new Image("file:E:/s.png"));
+settingsIcon.setFitWidth(100);
+settingsIcon.setFitHeight(100);
 
+// دکمهsetting
+Button soundSettingsBtn = new Button();
+soundSettingsBtn.setGraphic(settingsIcon);
+soundSettingsBtn.setStyle("-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;");
+
+// 
+DropShadow blueShadow = new DropShadow();
+blueShadow.setColor(Color.rgb(33, 150, 243)); // آبی پررنگ
+blueShadow.setRadius(15);
+blueShadow.setOffsetX(0);
+blueShadow.setOffsetY(0);
+
+// سایه
+soundSettingsBtn.setOnMouseEntered(e -> settingsIcon.setEffect(blueShadow));
+soundSettingsBtn.setOnMouseExited(e -> settingsIcon.setEffect(null));
+
+// عملکرد دکمه
+soundSettingsBtn.setOnAction(e -> openSoundSettingsWindow(back));
+
+// موقعیت setting
+soundSettingsBtn.setLayoutX(647);   
+soundSettingsBtn.setLayoutY(450); 
+
+pane.getChildren().add(soundSettingsBtn);
         if (counterWin != 0) {
 
             showVictoryAnimation(pane);
