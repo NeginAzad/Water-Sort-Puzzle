@@ -147,6 +147,7 @@ public class Bottles {
 
     public void animation(Bottles bottle2 , CreateRectangles createRectangles, Stage stage) {
 
+        Main.isAnimating = true;
         ParallelTransition pt1 = new ParallelTransition();
         ParallelTransition pt2 = new ParallelTransition();
 
@@ -244,6 +245,7 @@ public class Bottles {
 
             seq3.setOnFinished(event ->{
 
+                Main.isAnimating = false;
                 delete(shouldDelete);
                 bottle2.add();
                 pt2.play();

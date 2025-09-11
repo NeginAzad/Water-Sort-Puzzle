@@ -41,6 +41,7 @@ public class Main extends Application {
     int counterWin = 0;
     static BackGroundMusic back = new BackGroundMusic();
     static boolean waterIsMute = false;
+    static boolean isAnimating = false;
 
     public void showVictoryAnimation(Pane pane) {
 
@@ -382,14 +383,20 @@ public class Main extends Application {
         resetbuButton.setOnMouseExited(e -> Reset.setEffect(null));
 
         // عملکرد دکمه
-        resetbuButton.setOnAction(e -> resetButton.reset());
+        resetbuButton.setOnAction(e -> {
+
+            if (!(isAnimating)) {
+                resetButton.reset();
+            }
+        });
 
         reset.setLayoutX(200);
         reset.setLayoutY(50);
         pane.getChildren().add(resetbuButton);
 
         // دکمه undo
-        ImageView undoIcon = new ImageView(new Image("file:C:\\Users\\parseh\\Desktop\\icons\\uuu.png")); // مسیر آیکون دلخواهت
+        ImageView undoIcon = new ImageView(new Image("file:C:\\Users\\parseh\\Desktop\\icons\\uuu.png")); // مسیر آیکون
+                                                                                                          // دلخواهت
         undoIcon.setFitWidth(100);
         undoIcon.setFitHeight(100);
 
@@ -412,7 +419,7 @@ public class Main extends Application {
         // عملکرد دکمه
         undoButton.setOnAction(e -> {
 
-            if (!undoStack.isEmpty()) {
+            if (!undoStack.isEmpty() && !(isAnimating)) {
                 GameState lastState = undoStack.pop();
                 restoreState(lastState, createRectangles.bottles);
             }
@@ -531,45 +538,49 @@ public class Main extends Application {
             double y = event.getY();
 
             // بررسی بطری مبدا
-            if (bottle.findBottle(x, y, createRectangles) != null && counter[0] == 0) {
 
-                bottle1[0] = bottle.findBottle(x, y, createRectangles);
+            if (!(isAnimating)) {
+                
+                if (bottle.findBottle(x, y, createRectangles) != null && counter[0] == 0) {
 
-                if (bottle1[0].isEmpty()) {
+                    bottle1[0] = bottle.findBottle(x, y, createRectangles);
 
-                    label1.setVisible(true);
-                } else {
+                    if (bottle1[0].isEmpty()) {
 
-                    counter[0] = 1;
-                }
-            }
-            // بررسی بطری مقصد
+                        label1.setVisible(true);
+                    } else {
 
-            else if (bottle.findBottle(x, y, createRectangles) != null && counter[0] == 1) {
-
-                bottle2[0] = bottle.findBottle(x, y, createRectangles);
-
-                if (bottle1[0] == bottle2[0]) {
-
-                    label4.setVisible(true);
-
-                } else if (bottle2[0].getStack().size() == 4) {
-
-                    label2.setVisible(true);
-                } else {
-
-                    if (bottle2[0].match(bottle1[0])) {
-                        undoStack.push(new GameState(createRectangles.bottles));
-                        bottle1[0].animation(bottle2[0], createRectangles, stage);
-
-                    }
-
-                    else {
-                        label3.setVisible(true);
-
+                        counter[0] = 1;
                     }
                 }
-                counter[0] = 0;
+                // بررسی بطری مقصد
+
+                else if (bottle.findBottle(x, y, createRectangles) != null && counter[0] == 1) {
+
+                    bottle2[0] = bottle.findBottle(x, y, createRectangles);
+
+                    if (bottle1[0] == bottle2[0]) {
+
+                        label4.setVisible(true);
+
+                    } else if (bottle2[0].getStack().size() == 4) {
+
+                        label2.setVisible(true);
+                    } else {
+
+                        if (bottle2[0].match(bottle1[0])) {
+                            undoStack.push(new GameState(createRectangles.bottles));
+                            bottle1[0].animation(bottle2[0], createRectangles, stage);
+
+                        }
+
+                        else {
+                            label3.setVisible(true);
+
+                        }
+                    }
+                    counter[0] = 0;
+                }
             }
 
         });
