@@ -375,6 +375,47 @@ resetbuButton.setOnAction(e -> resetButton.reset());
 reset.setLayoutX(200);
          reset.setLayoutY(50);
          pane.getChildren().add(resetbuButton);
+
+          Button undo = new Button("UNDO");
+        
+        // دکمه undo
+ImageView undoIcon = new ImageView(new Image("file:E:/uuu.png")); // مسیر آیکون دلخواهت
+undoIcon.setFitWidth(100);
+undoIcon.setFitHeight(100);
+
+// دکمه undo
+Button undoButton = new Button();
+undoButton.setGraphic(undoIcon);
+undoButton.setStyle("-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;");
+
+// 
+DropShadow blueShadow1 = new DropShadow();
+blueShadow.setColor(Color.rgb(39, 3, 245, 1)); // آبی پررنگ
+blueShadow.setRadius(15);
+blueShadow.setOffsetX(0);
+blueShadow.setOffsetY(0);
+
+// سایه
+undoButton.setOnMouseEntered(e -> undoIcon.setEffect(blueShadow));
+undoButton.setOnMouseExited(e -> undoIcon.setEffect(null));
+
+// عملکرد دکمه
+undoButton.setOnAction(e -> {
+            if (!undoStack.isEmpty()) {
+                GameState lastState = undoStack.pop();
+                restoreState(lastState, createRectangles.bottles);
+
+            }
+
+        });
+
+
+// موقعیت‌
+undoButton.setLayoutX(170);
+undoButton.setLayoutY(2);
+
+
+pane.getChildren().add(undoButton);
         
         // دکمه های هشدار
 
