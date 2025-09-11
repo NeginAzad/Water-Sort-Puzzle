@@ -230,7 +230,10 @@ public class Bottles {
             PauseTransition sound = new PauseTransition(Duration.millis(j));
             sound.setOnFinished(e -> {
 
-                waterSound.play();
+                if (!(Main.waterIsMute)) {
+
+                    waterSound.play();
+                }
             });
             ParallelTransition pt3 = new ParallelTransition();
             pt3.getChildren().addAll(seq1.getChildren().get(j) , seq2.getChildren().get(j) , sound);

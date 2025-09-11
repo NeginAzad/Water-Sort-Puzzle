@@ -115,35 +115,35 @@ public class Main extends Application {
     public void showStartScene(Stage stage) {
 
         Pane pane = new Pane();
-// آیکون setting
-ImageView settingsIcon = new ImageView(new Image("file:C:\\Users\\parseh\\Desktop\\icons\\s.png"));
-settingsIcon.setFitWidth(100);
-settingsIcon.setFitHeight(100);
+        // آیکون setting
+        ImageView settingsIcon = new ImageView(new Image("file:C:\\Users\\parseh\\Desktop\\icons\\s.png"));
+        settingsIcon.setFitWidth(100);
+        settingsIcon.setFitHeight(100);
 
-// دکمهsetting
-Button soundSettingsBtn = new Button();
-soundSettingsBtn.setGraphic(settingsIcon);
-soundSettingsBtn.setStyle("-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;");
+        // دکمهsetting
+        Button soundSettingsBtn = new Button();
+        soundSettingsBtn.setGraphic(settingsIcon);
+        soundSettingsBtn.setStyle("-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;");
 
-// 
-DropShadow blueShadow = new DropShadow();
-blueShadow.setColor(Color.rgb(33, 150, 243)); // آبی پررنگ
-blueShadow.setRadius(15);
-blueShadow.setOffsetX(0);
-blueShadow.setOffsetY(0);
+        //
+        DropShadow blueShadow = new DropShadow();
+        blueShadow.setColor(Color.rgb(33, 150, 243)); // آبی پررنگ
+        blueShadow.setRadius(15);
+        blueShadow.setOffsetX(0);
+        blueShadow.setOffsetY(0);
 
-// سایه
-soundSettingsBtn.setOnMouseEntered(e -> settingsIcon.setEffect(blueShadow));
-soundSettingsBtn.setOnMouseExited(e -> settingsIcon.setEffect(null));
+        // سایه
+        soundSettingsBtn.setOnMouseEntered(e -> settingsIcon.setEffect(blueShadow));
+        soundSettingsBtn.setOnMouseExited(e -> settingsIcon.setEffect(null));
 
-// عملکرد دکمه
-soundSettingsBtn.setOnAction(e -> openSoundSettingsWindow(back));
+        // عملکرد دکمه
+        soundSettingsBtn.setOnAction(e -> openSoundSettingsWindow(back));
 
-// موقعیت setting
-soundSettingsBtn.setLayoutX(647);   
-soundSettingsBtn.setLayoutY(450); 
+        // موقعیت setting
+        soundSettingsBtn.setLayoutX(647);
+        soundSettingsBtn.setLayoutY(450);
 
-pane.getChildren().add(soundSettingsBtn);
+        pane.getChildren().add(soundSettingsBtn);
         if (counterWin != 0) {
 
             showVictoryAnimation(pane);
@@ -244,105 +244,107 @@ pane.getChildren().add(soundSettingsBtn);
         stage.setScene(startScene);
         stage.show();
     }
- private void openSoundSettingsWindow(BackGroundMusic back) {
-    Stage soundStage = new Stage();
-    soundStage.initStyle(StageStyle.TRANSPARENT);
 
-    Font roundedFont = Font.font("Arial", 14);
+    private void openSoundSettingsWindow(BackGroundMusic back) {
+        Stage soundStage = new Stage();
+        soundStage.initStyle(StageStyle.TRANSPARENT);
 
-    // ایکون های backgroundmusic
-    ImageView bgMuteIcon = new ImageView(new Image("file:E:/mute.png"));
-    ImageView bgUnmuteIcon = new ImageView(new Image("file:E:/unmute.png"));
-    bgMuteIcon.setFitWidth(70);
-    bgMuteIcon.setFitHeight(70);
-    bgUnmuteIcon.setFitWidth(70);
-    bgUnmuteIcon.setFitHeight(70);
+        Font roundedFont = Font.font("Arial", 14);
 
-    Label bgLabel = new Label("Background music");
-    bgLabel.setFont(roundedFont);
-    bgLabel.setStyle("-fx-text-fill: #2196F3;");
+        // ایکون های backgroundmusic
+        ImageView bgMuteIcon = new ImageView(new Image("file:E:/mute.png"));
+        ImageView bgUnmuteIcon = new ImageView(new Image("file:E:/unmute.png"));
+        bgMuteIcon.setFitWidth(70);
+        bgMuteIcon.setFitHeight(70);
+        bgUnmuteIcon.setFitWidth(70);
+        bgUnmuteIcon.setFitHeight(70);
 
-    HBox bgContent = new HBox(10, bgLabel, back.isMute() ? bgMuteIcon : bgUnmuteIcon);
-    bgContent.setAlignment(Pos.CENTER_LEFT);
+        Label bgLabel = new Label("Background music");
+        bgLabel.setFont(roundedFont);
+        bgLabel.setStyle("-fx-text-fill: #2196F3;");
 
-    Button muteBackgroundBtn = new Button();
-    muteBackgroundBtn.setGraphic(bgContent);
-    muteBackgroundBtn.setStyle("-fx-background-color: transparent;");
-    muteBackgroundBtn.setOnAction(e -> {
-        boolean isMuted = back.isMute();
-        back.setMute(!isMuted);
-        ImageView newIcon = isMuted ? bgUnmuteIcon : bgMuteIcon;
-        Label newLabel = new Label("Background music");
-        newLabel.setFont(roundedFont);
-        newLabel.setStyle("-fx-text-fill: #2196F3;");
-        HBox newContent = new HBox(10, newLabel, newIcon);
-        newContent.setAlignment(Pos.CENTER_LEFT);
-        muteBackgroundBtn.setGraphic(newContent);
-    });
+        HBox bgContent = new HBox(10, bgLabel, back.isMute() ? bgMuteIcon : bgUnmuteIcon);
+        bgContent.setAlignment(Pos.CENTER_LEFT);
 
-    // آیکون‌های watersound
-    ImageView waterMuteIcon = new ImageView(new Image("file:E:/mute.png"));
-    ImageView waterUnmuteIcon = new ImageView(new Image("file:E:/unmute.png"));
-    waterMuteIcon.setFitWidth(70);
-    waterMuteIcon.setFitHeight(70);
-    waterUnmuteIcon.setFitWidth(70);
-    waterUnmuteIcon.setFitHeight(70);
+        Button muteBackgroundBtn = new Button();
+        muteBackgroundBtn.setGraphic(bgContent);
+        muteBackgroundBtn.setStyle("-fx-background-color: transparent;");
+        muteBackgroundBtn.setOnAction(e -> {
+            boolean isMuted = back.isMute();
+            back.setMute(!isMuted);
+            ImageView newIcon = isMuted ? bgUnmuteIcon : bgMuteIcon;
+            Label newLabel = new Label("Background music");
+            newLabel.setFont(roundedFont);
+            newLabel.setStyle("-fx-text-fill: #2196F3;");
+            HBox newContent = new HBox(10, newLabel, newIcon);
+            newContent.setAlignment(Pos.CENTER_LEFT);
+            muteBackgroundBtn.setGraphic(newContent);
+        });
 
-    Label waterLabel = new Label("Watersound");
-    waterLabel.setFont(roundedFont);
-    waterLabel.setStyle("-fx-text-fill: #2196F3;");
+        // آیکون‌های watersound
+        ImageView waterMuteIcon = new ImageView(new Image("file:E:/mute.png"));
+        ImageView waterUnmuteIcon = new ImageView(new Image("file:E:/unmute.png"));
+        waterMuteIcon.setFitWidth(70);
+        waterMuteIcon.setFitHeight(70);
+        waterUnmuteIcon.setFitWidth(70);
+        waterUnmuteIcon.setFitHeight(70);
 
-    HBox waterContent = new HBox(10, waterLabel, waterIsMute ? waterMuteIcon : waterUnmuteIcon);
-    waterContent.setAlignment(Pos.CENTER_LEFT);
+        Label waterLabel = new Label("Watersound");
+        waterLabel.setFont(roundedFont);
+        waterLabel.setStyle("-fx-text-fill: #2196F3;");
 
-    Button muteWaterBtn = new Button();
-    muteWaterBtn.setGraphic(waterContent);
-    muteWaterBtn.setStyle("-fx-background-color: transparent;");
-    muteWaterBtn.setOnAction(e -> {
-        waterIsMute = !waterIsMute;
-        ImageView newIcon = waterIsMute ? waterMuteIcon : waterUnmuteIcon;
-        Label newLabel = new Label("Watersound");
-        newLabel.setFont(roundedFont);
-        newLabel.setStyle("-fx-text-fill: #2196F3;");
-        HBox newContent = new HBox(10, newLabel, newIcon);
-        newContent.setAlignment(Pos.CENTER_LEFT);
-        muteWaterBtn.setGraphic(newContent);
-    });
+        HBox waterContent = new HBox(10, waterLabel, waterIsMute ? waterMuteIcon : waterUnmuteIcon);
+        waterContent.setAlignment(Pos.CENTER_LEFT);
 
-    // دکمه close
-    ImageView closeIcon = new ImageView(new Image("file:E:/close.png"));
-    closeIcon.setFitWidth(60);
-    closeIcon.setFitHeight(60);
+        Button muteWaterBtn = new Button();
+        muteWaterBtn.setGraphic(waterContent);
+        muteWaterBtn.setStyle("-fx-background-color: transparent;");
+        muteWaterBtn.setOnAction(e -> {
+            waterIsMute = !waterIsMute;
+            ImageView newIcon = waterIsMute ? waterMuteIcon : waterUnmuteIcon;
+            Label newLabel = new Label("Watersound");
+            newLabel.setFont(roundedFont);
+            newLabel.setStyle("-fx-text-fill: #2196F3;");
+            HBox newContent = new HBox(10, newLabel, newIcon);
+            newContent.setAlignment(Pos.CENTER_LEFT);
+            muteWaterBtn.setGraphic(newContent);
+        });
 
-    Button closeBtn = new Button();
-    closeBtn.setGraphic(closeIcon);
-    closeBtn.setStyle("-fx-background-color: transparent;");
-    closeBtn.setOnAction(e -> soundStage.close());
+        // دکمه close
+        ImageView closeIcon = new ImageView(new Image("file:E:/close.png"));
+        closeIcon.setFitWidth(60);
+        closeIcon.setFitHeight(60);
 
-    // نوار بالایی فقط برای کلوز
-    HBox topBar = new HBox(closeBtn);
-    topBar.setAlignment(Pos.TOP_RIGHT);
-    topBar.setPadding(new Insets(5, 5, 0, 0));
+        Button closeBtn = new Button();
+        closeBtn.setGraphic(closeIcon);
+        closeBtn.setStyle("-fx-background-color: transparent;");
+        closeBtn.setOnAction(e -> soundStage.close());
 
-    // محتوای اصلی چپ
-    VBox content = new VBox(15, muteBackgroundBtn, muteWaterBtn);
-    content.setAlignment(Pos.CENTER_LEFT);
-    content.setPadding(new Insets(10, 15, 15, 15));
+        // نوار بالایی فقط برای کلوز
+        HBox topBar = new HBox(closeBtn);
+        topBar.setAlignment(Pos.TOP_RIGHT);
+        topBar.setPadding(new Insets(5, 5, 0, 0));
 
-    // چینش
-    VBox layout = new VBox(topBar, content);
-    layout.setStyle("""
-        -fx-background-color: rgba(243, 249, 192, 1);
-        -fx-background-radius: 25;
-    """);
+        // محتوای اصلی چپ
+        VBox content = new VBox(15, muteBackgroundBtn, muteWaterBtn);
+        content.setAlignment(Pos.CENTER_LEFT);
+        content.setPadding(new Insets(10, 15, 15, 15));
 
-    Scene scene = new Scene(layout, 320, 260);
-    scene.setFill(Color.TRANSPARENT);
+        // چینش
+        VBox layout = new VBox(topBar, content);
+        layout.setStyle("""
+                    -fx-background-color: rgba(243, 249, 192, 1);
+                    -fx-background-radius: 25;
+                """);
 
-    soundStage.setScene(scene);
-    soundStage.initModality(Modality.APPLICATION_MODAL);
-    soundStage.show();
-}
+        Scene scene = new Scene(layout, 320, 260);
+        scene.setFill(Color.TRANSPARENT);
+
+        soundStage.setScene(scene);
+        soundStage.initModality(Modality.APPLICATION_MODAL);
+        soundStage.show();
+    }
+
     public void showGameScene(Stage stage, int random) {
 
         Pane pane = new Pane();
@@ -360,58 +362,58 @@ pane.getChildren().add(soundSettingsBtn);
         ResetGame resetButton = new ResetGame(pane, createRectangles.bottles, createRectangles, random);
         Button reset = new Button("RESET");
 
-       ImageView Reset = new ImageView(new Image("file:E:/rff.png"));
+        ImageView Reset = new ImageView(new Image("file:E:/rff.png"));
         Reset.setFitWidth(100);
         Reset.setFitHeight(100);
 
-// دکمه reset
-Button resetbuButton = new Button();
-resetbuButton.setGraphic(Reset);
-resetbuButton.setStyle("-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;");
+        // دکمه reset
+        Button resetbuButton = new Button();
+        resetbuButton.setGraphic(Reset);
+        resetbuButton.setStyle("-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;");
 
-// 
-DropShadow blueShadow = new DropShadow();
-blueShadow.setColor(Color.rgb(39, 3, 245, 1)); // آبی پررنگ
-blueShadow.setRadius(15);
-blueShadow.setOffsetX(0);
-blueShadow.setOffsetY(0);
+        //
+        DropShadow blueShadow = new DropShadow();
+        blueShadow.setColor(Color.rgb(39, 3, 245, 1)); // آبی پررنگ
+        blueShadow.setRadius(15);
+        blueShadow.setOffsetX(0);
+        blueShadow.setOffsetY(0);
 
-// سایه
-resetbuButton.setOnMouseEntered(e -> Reset.setEffect(blueShadow));
-resetbuButton.setOnMouseExited(e -> Reset.setEffect(null));
+        // سایه
+        resetbuButton.setOnMouseEntered(e -> Reset.setEffect(blueShadow));
+        resetbuButton.setOnMouseExited(e -> Reset.setEffect(null));
 
-// عملکرد دکمه
-resetbuButton.setOnAction(e -> resetButton.reset());
+        // عملکرد دکمه
+        resetbuButton.setOnAction(e -> resetButton.reset());
 
-reset.setLayoutX(200);
-         reset.setLayoutY(50);
-         pane.getChildren().add(resetbuButton);
+        reset.setLayoutX(200);
+        reset.setLayoutY(50);
+        pane.getChildren().add(resetbuButton);
 
-          Button undo = new Button("UNDO");
-        
+        Button undo = new Button("UNDO");
+
         // دکمه undo
-ImageView undoIcon = new ImageView(new Image("file:E:/uuu.png")); // مسیر آیکون دلخواهت
-undoIcon.setFitWidth(100);
-undoIcon.setFitHeight(100);
+        ImageView undoIcon = new ImageView(new Image("file:E:/uuu.png")); // مسیر آیکون دلخواهت
+        undoIcon.setFitWidth(100);
+        undoIcon.setFitHeight(100);
 
-// دکمه undo
-Button undoButton = new Button();
-undoButton.setGraphic(undoIcon);
-undoButton.setStyle("-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;");
+        // دکمه undo
+        Button undoButton = new Button();
+        undoButton.setGraphic(undoIcon);
+        undoButton.setStyle("-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;");
 
-// 
-DropShadow blueShadow1 = new DropShadow();
-blueShadow.setColor(Color.rgb(39, 3, 245, 1)); // آبی پررنگ
-blueShadow.setRadius(15);
-blueShadow.setOffsetX(0);
-blueShadow.setOffsetY(0);
+        //
+        DropShadow blueShadow1 = new DropShadow();
+        blueShadow.setColor(Color.rgb(39, 3, 245, 1)); // آبی پررنگ
+        blueShadow.setRadius(15);
+        blueShadow.setOffsetX(0);
+        blueShadow.setOffsetY(0);
 
-// سایه
-undoButton.setOnMouseEntered(e -> undoIcon.setEffect(blueShadow));
-undoButton.setOnMouseExited(e -> undoIcon.setEffect(null));
+        // سایه
+        undoButton.setOnMouseEntered(e -> undoIcon.setEffect(blueShadow));
+        undoButton.setOnMouseExited(e -> undoIcon.setEffect(null));
 
-// عملکرد دکمه
-undoButton.setOnAction(e -> {
+        // عملکرد دکمه
+        undoButton.setOnAction(e -> {
 
             if (!undoStack.isEmpty()) {
                 GameState lastState = undoStack.pop();
@@ -420,14 +422,12 @@ undoButton.setOnAction(e -> {
 
         });
 
+        // موقعیت‌
+        undoButton.setLayoutX(170);
+        undoButton.setLayoutY(2);
 
-// موقعیت‌
-undoButton.setLayoutX(170);
-undoButton.setLayoutY(2);
+        pane.getChildren().add(undoButton);
 
-
-pane.getChildren().add(undoButton);
-        
         // دکمه های هشدار
 
         Label label1 = new Label("the chosen bottle is empty!");
@@ -540,7 +540,6 @@ pane.getChildren().add(undoButton);
 
                 if (bottle1[0].isEmpty()) {
 
-
                     label1.setVisible(true);
                 } else {
 
@@ -562,14 +561,13 @@ pane.getChildren().add(undoButton);
                     label2.setVisible(true);
                 } else {
 
-                    if (bottle2[0].match(bottle1[0])) {    
-                            undoStack.push(new GameState(createRectangles.bottles));
-                             bottle1 [0].animation(bottle2[0], createRectangles, stage);
+                    if (bottle2[0].match(bottle1[0])) {
+                        undoStack.push(new GameState(createRectangles.bottles));
+                        bottle1[0].animation(bottle2[0], createRectangles, stage);
 
-        
                     }
 
-                    else{
+                    else {
                         label3.setVisible(true);
 
                     }
@@ -583,34 +581,32 @@ pane.getChildren().add(undoButton);
         stage.show();
     }
 
-
     public void restoreState(GameState state, ArrayList<Bottles> bottles) {
-    for (int i = 0; i < bottles.size(); i++) {
-        Bottles bottle = bottles.get(i);
+        for (int i = 0; i < bottles.size(); i++) {
+            Bottles bottle = bottles.get(i);
 
-        // حذف مستطیل‌ها از group (به‌جز بطری اصلی)
-        bottle.group.getChildren().removeIf(n -> n instanceof Rectangle && n != bottle.getRectangle());
+            // حذف مستطیل‌ها از group (به‌جز بطری اصلی)
+            bottle.group.getChildren().removeIf(n -> n instanceof Rectangle && n != bottle.getRectangle());
 
-        // پاک کردن لیست فعلی
-        bottle.getStack().clear();
+            // پاک کردن لیست فعلی
+            bottle.getStack().clear();
 
-        for (int j = 0; j < state.colors.get(i).size(); j++) {
-            Color color = state.colors.get(i).get(j);
-            double height = state.heights.get(i).get(j);
-            double y = state.yPositions.get(i).get(j);
-            double x = bottle.getRectangle().getX();
+            for (int j = 0; j < state.colors.get(i).size(); j++) {
+                Color color = state.colors.get(i).get(j);
+                double height = state.heights.get(i).get(j);
+                double y = state.yPositions.get(i).get(j);
+                double x = bottle.getRectangle().getX();
 
-            Rectangle r = new Rectangle(x, y, 60, height);
-            r.setFill(color);
+                Rectangle r = new Rectangle(x, y, 60, height);
+                r.setFill(color);
 
-            bottle.getStack().push(r);
+                bottle.getStack().push(r);
+            }
+
+            bottle.group.getChildren().addAll(bottle.getStack());
         }
-
-        bottle.group.getChildren().addAll(bottle.getStack());
     }
-}
 
-    
     public static void main(String[] args) {
 
         launch(args);
