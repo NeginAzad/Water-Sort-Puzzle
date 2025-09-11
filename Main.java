@@ -349,7 +349,32 @@ pane.getChildren().add(soundSettingsBtn);
         ResetGame resetButton = new ResetGame(pane, createRectangles.bottles, createRectangles, random);
         Button reset = new Button("RESET");
 
-       
+       ImageView Reset = new ImageView(new Image("file:E:/rff.png"));
+Reset.setFitWidth(100);
+Reset.setFitHeight(100);
+
+// دکمه reset
+Button resetbuButton = new Button();
+resetbuButton.setGraphic(Reset);
+resetbuButton.setStyle("-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;");
+
+// 
+DropShadow blueShadow = new DropShadow();
+blueShadow.setColor(Color.rgb(39, 3, 245, 1)); // آبی پررنگ
+blueShadow.setRadius(15);
+blueShadow.setOffsetX(0);
+blueShadow.setOffsetY(0);
+
+// سایه
+resetbuButton.setOnMouseEntered(e -> Reset.setEffect(blueShadow));
+resetbuButton.setOnMouseExited(e -> Reset.setEffect(null));
+
+// عملکرد دکمه
+resetbuButton.setOnAction(e -> resetButton.reset());
+
+reset.setLayoutX(200);
+         reset.setLayoutY(50);
+         pane.getChildren().add(resetbuButton);
         
         // دکمه های هشدار
 
