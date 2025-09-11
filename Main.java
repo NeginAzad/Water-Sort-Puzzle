@@ -233,7 +233,105 @@ pane.getChildren().add(soundSettingsBtn);
         stage.setScene(startScene);
         stage.show();
     }
+ private void openSoundSettingsWindow(BackGroundMusic back) {
+    Stage soundStage = new Stage();
+    soundStage.initStyle(StageStyle.TRANSPARENT);
 
+    Font roundedFont = Font.font("Arial", 14);
+
+    // ایکون های backgroundmusic
+    ImageView bgMuteIcon = new ImageView(new Image("file:E:/mute.png"));
+    ImageView bgUnmuteIcon = new ImageView(new Image("file:E:/unmute.png"));
+    bgMuteIcon.setFitWidth(70);
+    bgMuteIcon.setFitHeight(70);
+    bgUnmuteIcon.setFitWidth(70);
+    bgUnmuteIcon.setFitHeight(70);
+
+    Label bgLabel = new Label("Background music");
+    bgLabel.setFont(roundedFont);
+    bgLabel.setStyle("-fx-text-fill: #2196F3;");
+
+    HBox bgContent = new HBox(10, bgLabel, back.isMute() ? bgMuteIcon : bgUnmuteIcon);
+    bgContent.setAlignment(Pos.CENTER_LEFT);
+
+    Button muteBackgroundBtn = new Button();
+    muteBackgroundBtn.setGraphic(bgContent);
+    muteBackgroundBtn.setStyle("-fx-background-color: transparent;");
+    muteBackgroundBtn.setOnAction(e -> {
+        boolean isMuted = back.isMute();
+        back.setMute(!isMuted);
+        ImageView newIcon = isMuted ? bgUnmuteIcon : bgMuteIcon;
+        Label newLabel = new Label("Background music");
+        newLabel.setFont(roundedFont);
+        newLabel.setStyle("-fx-text-fill: #2196F3;");
+        HBox newContent = new HBox(10, newLabel, newIcon);
+        newContent.setAlignment(Pos.CENTER_LEFT);
+        muteBackgroundBtn.setGraphic(newContent);
+    });
+
+    // آیکون‌های watersound
+    ImageView waterMuteIcon = new ImageView(new Image("file:E:/mute.png"));
+    ImageView waterUnmuteIcon = new ImageView(new Image("file:E:/unmute.png"));
+    waterMuteIcon.setFitWidth(70);
+    waterMuteIcon.setFitHeight(70);
+    waterUnmuteIcon.setFitWidth(70);
+    waterUnmuteIcon.setFitHeight(70);
+
+    Label waterLabel = new Label("Watersound");
+    waterLabel.setFont(roundedFont);
+    waterLabel.setStyle("-fx-text-fill: #2196F3;");
+
+    HBox waterContent = new HBox(10, waterLabel, waterIsMute ? waterMuteIcon : waterUnmuteIcon);
+    waterContent.setAlignment(Pos.CENTER_LEFT);
+
+    Button muteWaterBtn = new Button();
+    muteWaterBtn.setGraphic(waterContent);
+    muteWaterBtn.setStyle("-fx-background-color: transparent;");
+    muteWaterBtn.setOnAction(e -> {
+        waterIsMute = !waterIsMute;
+        ImageView newIcon = waterIsMute ? waterMuteIcon : waterUnmuteIcon;
+        Label newLabel = new Label("Watersound");
+        newLabel.setFont(roundedFont);
+        newLabel.setStyle("-fx-text-fill: #2196F3;");
+        HBox newContent = new HBox(10, newLabel, newIcon);
+        newContent.setAlignment(Pos.CENTER_LEFT);
+        muteWaterBtn.setGraphic(newContent);
+    });
+
+    // دکمه close
+    ImageView closeIcon = new ImageView(new Image("file:E:/close.png"));
+    closeIcon.setFitWidth(60);
+    closeIcon.setFitHeight(60);
+
+    Button closeBtn = new Button();
+    closeBtn.setGraphic(closeIcon);
+    closeBtn.setStyle("-fx-background-color: transparent;");
+    closeBtn.setOnAction(e -> soundStage.close());
+
+    // نوار بالایی فقط برای کلوز
+    HBox topBar = new HBox(closeBtn);
+    topBar.setAlignment(Pos.TOP_RIGHT);
+    topBar.setPadding(new Insets(5, 5, 0, 0));
+
+    // محتوای اصلی چپ
+    VBox content = new VBox(15, muteBackgroundBtn, muteWaterBtn);
+    content.setAlignment(Pos.CENTER_LEFT);
+    content.setPadding(new Insets(10, 15, 15, 15));
+
+    // چینش
+    VBox layout = new VBox(topBar, content);
+    layout.setStyle("""
+        -fx-background-color: rgba(243, 249, 192, 1);
+        -fx-background-radius: 25;
+    """);
+
+    Scene scene = new Scene(layout, 320, 260);
+    scene.setFill(Color.TRANSPARENT);
+
+    soundStage.setScene(scene);
+    soundStage.initModality(Modality.APPLICATION_MODAL);
+    soundStage.show();
+}
     public void showGameScene(Stage stage, int random) {
 
         Pane pane = new Pane();
