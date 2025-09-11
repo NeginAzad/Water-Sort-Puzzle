@@ -1,40 +1,41 @@
- import java.io.File;
+import java.io.File;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
- import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer;
 
- public class MusicPourWater {
+public class MusicPourWater {
 
-     public MediaPlayer mediaPlayer;
+    public AudioClip audioClip;
 
-     public MusicPourWater() {
-         
-        String filePath = "C:\\Users\\parseh\\Downloads\\music\\water.mp3"; 
+    public MusicPourWater() {
+
+        String filePath = "C:\\Users\\parseh\\Downloads\\music\\water.mp3";
         File file = new File(filePath);
 
-         if (!file.exists()) {
-             System.out.println("Not valid: " + filePath);
-             return; 
-         }
+        if (!file.exists()) {
+            System.out.println("Not valid: " + filePath);
+            return;
+        }
 
-         String mediaPath = file.toURI().toString();
+        String mediaPath = file.toURI().toString();
 
-         try {
+        try {
 
-            Media media = new Media(mediaPath);
-            mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setVolume(1.0); 
-         } catch (Exception e) {
+            audioClip = new AudioClip(mediaPath);
+            audioClip.setVolume(1.0);
 
-             e.printStackTrace();
-             System.out.println("Error loading media");
-         }
-     }
-     public void play() {
+        } catch (Exception e) {
 
-         if (mediaPlayer != null) {
+            e.printStackTrace();
+            System.out.println("Error loading media");
+        }
+    }
 
-             mediaPlayer.play();
-         }
-     }
- }
+    public void play() {
+
+        if (audioClip != null) {
+
+            audioClip.play();
+        }
+    }
+}
